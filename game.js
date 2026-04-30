@@ -8,6 +8,15 @@
     canvas.height = 728;
     let collision = 0;
     let isOnGround = false;
+
+    canvas.style.cursor = 'none';
+    
+    let mouse = {
+        x: canvas.width / 2,
+        y: canvas.height / 2
+    };
+
+
     class Player {
 
 
@@ -67,6 +76,22 @@
     ];
 
 
+    function Crosshair(){
+        
+        context,beginPath();
+
+        context.moveTo(mouse.x - 12 , mouse.y);
+        context.lineTo(mouse.x + 12 , mouse.y);
+        context.moveTo(mouse.x , mouse.y - 12);
+        context.lineTo(mouse.x , mouse.y + 12);
+
+        context.strokeStyle = "red";
+        context.lineWidth = 2;
+        context,stroke();
+        context.closePath();
+
+    }
+
 
     function gameLoop(){
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -77,7 +102,7 @@
         });
         player.draw();
 
-    
+        Crosshair();
         
         
         
@@ -88,6 +113,8 @@
 
     }
     keyHandler();
+
+    mouseHandler();
 
 
 
@@ -159,5 +186,16 @@
         });
 
 
+    }
+
+
+    function mouseHandler(){
+        canvas.addEventListener("mousemove",(mouseEvent) => {
+
+            const  clientRect = canvas.getBoundingClientRect();
+            
+            mouse.x = mouseEvent.clientX - clientRect.left;
+            mouse.y = mouseEvent.clientY - clientRect.top;
+        });
     }
 
