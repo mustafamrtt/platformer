@@ -78,7 +78,7 @@
 
     function Crosshair(){
         
-        context,beginPath();
+        context.beginPath();
 
         context.moveTo(mouse.x - 12 , mouse.y);
         context.lineTo(mouse.x + 12 , mouse.y);
@@ -87,7 +87,7 @@
 
         context.strokeStyle = "red";
         context.lineWidth = 2;
-        context,stroke();
+        context.stroke();
         context.closePath();
 
     }
