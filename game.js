@@ -80,13 +80,13 @@
         
         context.beginPath();
 
-        context.moveTo(mouse.x - 12 , mouse.y);
-        context.lineTo(mouse.x + 12 , mouse.y);
-        context.moveTo(mouse.x , mouse.y - 12);
-        context.lineTo(mouse.x , mouse.y + 12);
+        context.moveTo(mouse.x - 10 , mouse.y);
+        context.lineTo(mouse.x + 10 , mouse.y);
+        context.moveTo(mouse.x , mouse.y - 10);
+        context.lineTo(mouse.x , mouse.y + 10);
 
-        context.strokeStyle = "red";
-        context.lineWidth = 2;
+        context.strokeStyle = "black";
+        context.lineWidth = 4;
         context.stroke();
         context.closePath();
 
