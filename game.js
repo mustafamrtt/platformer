@@ -145,7 +145,7 @@
         
 
     }    
-    class crosshair{
+    class Crosshair{
         constructor(){
            this.x=0;
            this.y=0; 
@@ -173,6 +173,7 @@
              context.lineTo(mouseX,mouseY-6);
             context.strokeStyle= "red";
             context.stroke();
+            context.closePath();
         }
 
     }
