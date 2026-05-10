@@ -4,47 +4,242 @@
     const gravity = 0.03;
 
 
-    canvas.width = 1024;
-    canvas.height = 728;
+    canvas.width = 1280;
+    canvas.height = 720;
     let collision = 0;
+    let acceleration = 0.1;
     let isOnGround = false;
-
-    canvas.style.cursor = 'none';
-    
-    let mouse = {
-        x: canvas.width / 2,
-        y: canvas.height / 2
-    };
-
-
+    let mouseX,mouseY;
     class Player {
+         
+        
 
 
         constructor() {
-            let x = 100;
-            let y = 100;
-            let height = 70;
-            let width = 50;
-            this.image = image("characther.png");
-            this.x = x;
-            this.y = y;
-            this.height = height;
-            this.width = width;
+            this.x=100.0;
+            this.y= 100.0;
+            this.height =178;
+            this.width = 120;
+            this.spriteSheet;
+            this.frameHeight = 88;
+            this.frameWidth = 60;
+          
+            this.currentFrame=0;
+        
+            this.frameCount=0;
+            this.frameTimer=0;
+            this.animationspeed = 350;
+            
+          
+
+            this.IDLE = 0;
+            this.RUNNING = 1;
+            this.JUMPING = 2;
+            this.isDirectionRight = true; //yön kontrolü
+            this.currentRow=-1;
+           
             this.speed = {
                 x: 0,
                 y:  0
             }
+
             
+          
+           
         
         }
-        
-        draw(){
-            context.drawImage(this.image, this.x, this.y, this.width, this.height);
-            
+        getPosition(){
+            let position= {
+                x:this.x-40,
+                y:this.y-90
+            }
+            return position;
         }
+        start(){
+            this.spriteSheet = image("spritesheet.png");
+
+            this.animation(this.IDLE,2);
+            this.timestamp = 0.0;
+
+
+        }
+        animation(newRow, frameCount){
+            if(this.currentRow!= newRow){
+                this.currentRow = newRow;
+                this.frameCount = frameCount;
+                this.currentFrame = 0;
+                this.frameTimer = 0.0;
+
+
+
+
+
+                
+                
+            }
+
+        }
+        update(deltaTime){
+            // Bu kodu update metodunun en başına koy
+            console.log("Mevcut Hız X:", this.speed.x, "| Oynayan Animasyon:", this.currentRow);
+           if((this.speed.x===0)){
+            this.animation(this.IDLE,2);
+           }
+           else if(this.speed.x>0&&isOnGround){
+            this.isDirectionRight=true;
+            this.animation(this.RUNNING,4);
+           }
+           else if ( this.speed.x<0&&isOnGround){
+            this.isDirectionRight=false;
+            this.animation(this.RUNNING,4);
+           }
+           else if(!isOnGround){
+            this.animation(this.JUMPING,3);
+           }
+           
+            this.frameTimer += deltaTime;
+             
+            if(this.frameTimer >= this.animationspeed){
+                this.currentFrame++;
+                this.frameTimer = 0.0;
+
+            }
+            if(this.currentFrame >= this.frameCount){
+                this.currentFrame = 0;
+            }
+            
+
+        }
+        
+        draw(angle){
+            // Kaynaktan (spritesheet) kesilecek alanın koordinatları (Burayı değiştirmedin)
+    let frameX = this.currentFrame * this.frameWidth;
+    let frameY = this.currentRow * this.frameHeight;
+    
+
+    context.save(); // Canvas ayarlarını kaydet
+
+    if(this.isDirectionRight&&angle>90.0){ 
+        // --- SAĞA BAKIYORSA (Normal Çizim) ---
+        // Son iki parametreye DİKKAT: Artık 'this.width' ve 'this.height' (büyük boyutlar) kullanıyoruz.
+        context.drawImage(
+            this.spriteSheet, 
+            frameX, frameY, this.frameWidth, this.frameHeight, // Spritedaki orijinal boyut (kesim)
+            this.x, this.y, this.width, this.height // Ekranda çizilecek büyük boyut
+        );
+    }
+    else{ 
+        // --- SOLA BAKIYORSA (Aynalayarak Çizim) ---
+        // Karakteri büyüttüğümüz için, aynalama kaydırmasını da (translate) büyük boyuta göre yapmalıyız.
+        // DİKKAT: 'this.x + this.frameWidth' yerine 'this.x + this.width' yazıyoruz!
+        context.translate(this.x + this.width, this.y);
+        context.scale(-1, 1); // X ekseninde ters çevir (aynalama efekti)
+        
+        context.drawImage(
+            this.spriteSheet, 
+            frameX, frameY, this.frameWidth, this.frameHeight, // Spritedaki orijinal boyut (kesim)
+            0, 0, this.width, this.height // Ekranda çizilecek büyük boyut (translate yapıldığı için x:0, y:0)
+        );
+    }
+    context.restore(); // Canvas ayarlarını eski haline getir
+}
+    
+        
 
     }    
+    class crosshair{
+        constructor(){
+           this.x=0;
+           this.y=0; 
 
+           
+        }
+         update(){
+             window.addEventListener("mousemove",(event) => {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+
+            }) ;
+
+            this.x = mouseX;
+            this.y = mouseY;
+        }
+
+        draw(){
+            context.beginPath();
+            context.moveTo(mouseX,mouseY);
+            context.lineTo(mouseX-6,mouseY);
+            context.lineTo(mouseX+6,mouseY);
+            context.moveTo(mouseX,mouseY);
+            context.lineTo(mouseX,mouseY+6);
+             context.lineTo(mouseX,mouseY-6);
+            context.strokeStyle= "red";
+            context.stroke();
+        }
+
+    }
+    class Rifle{
+        constructor(x,y){
+            this.x = x;
+            this.y = y;
+            this.width = 90;
+            this.height = 90;
+            this.angle; 
+            this.spriteSheet = image("riflespritesheet.png");
+            this.frameWidth = 46;
+            this.frameHeight = 30;
+            this.currentFrame=0;
+        
+            this.clickTime=0;
+            this.isClicked = false;
+            
+      
+            this.isDirectionRight = true;
+        }
+        
+        update(playerX,playerY){
+                this.angle =(90.0-Math.atan2(this.x+this.width/2-mouseX,this.y+this.height/2-mouseY));//silah ile mouse arasındaki açıyı buluyoruz
+                
+                if(this.isClicked && Date.now()-this.clickTime >= 400){
+                    this.currentFrame = 0;
+                    this.isClicked = false;
+                }
+                if(this.angle>90.00){
+                    this.x = playerX+player.width-30;
+                    this.y = playerY+100;
+                    
+                }   
+                else{
+                    this.x = playerX+30;
+                    this.y = playerY+100;
+                   
+                }
+        }
+              
+        draw(){
+            console.log(this.angle);
+            context.save();
+            context.translate(this.x,this.y);
+            context.rotate(this.angle);
+            if(this.angle>90.00){
+             context.scale(-1,-1);//silahı aynalıyoruz oyuncunun baktığı yere
+            }
+            else{
+                context.scale(-1,1);//silahı aynalıyoruz oyuncunun baktığı yöne
+            }
+            context.drawImage(this.spriteSheet,this.currentFrame*this.frameWidth,0,this.frameWidth,this.frameHeight,
+                this.width/-2.0,this.height/-2.0,this.width,this.height
+            );//çizim noktasını merkeze akip rotasyon veriyoruz
+
+            context.restore();
+
+          
+            
+           
+
+
+        }
+    }
     class Platform {
         constructor(x, y, width, height) {
             this.x = x;
@@ -53,7 +248,7 @@
             this.height = height;
         
         }
-
+       
         draw(){
             context.fillRect(this.x, this.y, this.width, this.height);
         }
@@ -66,7 +261,9 @@
 
     let platforms = [];
     let player = new Player(); 
-
+    let rifle = new Rifle(player.getPosition().x,player.getPosition().y);
+    let cross = new crosshair(mouseX,mouseY);
+    
 
     platforms = [
         new Platform(0, 500, 200, 500),
@@ -74,54 +271,54 @@
         new Platform(600, 300, 200, 20),
         new Platform(900, 200, 200, 20)
     ];
-
-
-    function Crosshair(){
+    
+    player.start();
+    
+    
+    let lastTime= 0;
+    function gameLoop(timeStamp){
         
-        context.beginPath();
-
-        context.moveTo(mouse.x - 7 , mouse.y);
-        context.lineTo(mouse.x + 7 , mouse.y);
-        context.moveTo(mouse.x , mouse.y - 7);
-        context.lineTo(mouse.x , mouse.y + 7);
-
-        context.strokeStyle = "black";
-        context.lineWidth = 2;
-        context.stroke();
-        context.closePath();
-
-    }
+        
+        const deltaTime = timeStamp -lastTime;
+        lastTime = timeStamp;
 
 
-    function gameLoop(){
+
         context.clearRect(0, 0, canvas.width, canvas.height);
         platforms.forEach(platform => {
             
             platform.draw();
 
         });
-        player.draw();
+     
+        player.update(deltaTime);
+        update();
+        collisionDetection();
+        cross.draw();
+        cross.update();
 
-        Crosshair();
+        player.draw(rifle.angle);
+        rifle.update(player.x,player.y);
+        rifle.draw()
+       
+    
+       
         
         
         
     
-        update();
-        collisionDetection();
+        
         requestAnimationFrame(gameLoop);
 
     }
     keyHandler();
-
-    mouseHandler();
-
+   
 
 
     function update(){
         
         player.x += player.speed.x;
-        player.speed.y += gravity
+        player.speed.y += gravity;
         player.y += player.speed.y;
         isOnGround = false;
         platforms.forEach(platform => {
@@ -139,13 +336,7 @@
                 player.y + player.height >= platform.y &&
                 player.y <= platform.y + platform.height
                 ) {
-                if(player.x+player.width < platform.x) {
-                        player.x = platform.x - player.width;
-
-                    }  
-                    if(player.x + player.width > platform.x + platform.width+5) {
-                        player.x = platform.x + platform.width;
-                    }
+        
                 
                 if(player.speed.y > 0 && player.y + player.height <= platform.y + player.speed.y) {
                         player.y = platform.y - player.height;
@@ -157,6 +348,9 @@
                         
                         
                     }
+                if(!isOnGround){
+                    player.speed.x = 0;
+                }  
                 
             
             }
@@ -170,12 +364,14 @@
             
             
             if (event.code === "ArrowRight") {
-                player.speed.x = 1;
+                player.speed.x = 2;
+                player.lastKey = 0;
             } else if (event.code === "ArrowLeft") {
-                player.speed.x = -1;
+                player.speed.x = -2;
+                player.lastKey = 2;
             }
                 else if(event.code === "ArrowUp"&& isOnGround) {
-                player.speed.y = -3;
+                player.speed.y = -2.9;
             }
             
         });   
@@ -184,6 +380,13 @@
                 player.speed.x = 0;
             }
         });
+        canvas.addEventListener("mousedown", (event) => {
+        rifle.isClicked = true;
+        rifle.clickTime = Date.now();
+        rifle.currentFrame = 1; // ateş animasyonu
+    });
+       
+      
 
 
     }
