@@ -9,7 +9,7 @@
     let collision = 0;
     let acceleration = 0.1;
     let isOnGround = false;
-
+    
 
 
     let mouseX,mouseY;
@@ -154,13 +154,15 @@
         }
          update(){
              window.addEventListener("mousemove",(event) => {
+
+
             mouseX = event.clientX;
             mouseY = event.clientY;
-
+            
+            this.x = mouseX;
+            this.y = mouseY;    
             }) ;
 
-            this.x = mouseX;
-            this.y = mouseY;
         }
 
         draw(){
@@ -177,6 +179,7 @@
         }
 
     }
+    
     class Rifle{
         constructor(x,y){
             this.x = x;
@@ -197,7 +200,7 @@
         }
         
         update(playerX,playerY){
-                this.angle =(90.0-Math.atan2(this.x+this.width/2-mouseX,this.y+this.height/2-mouseY));//silah ile mouse arasındaki açıyı buluyoruz
+                this.angle =Math.abs((90.0-Math.atan2(this.x-cross.x,this.y-cross.y)));//silah ile mouse arasındaki açıyı buluyoruz
                 
                 if(this.isClicked && Date.now()-this.clickTime >= 400){
                     this.currentFrame = 0;
@@ -261,7 +264,7 @@
     let platforms = [];
     let player = new Player(); 
     let rifle = new Rifle(player.getPosition().x,player.getPosition().y);
-    let cross = new crosshair(mouseX,mouseY);
+    let cross = new Crosshair(mouseX,mouseY);
     
 
     platforms = [
@@ -282,22 +285,6 @@
         lastTime = timeStamp;
 
 
-    function Crosshair(){
-        
-        context.beginPath();
-
-        context.moveTo(mouse.x - 7 , mouse.y);
-        context.lineTo(mouse.x + 7 , mouse.y);
-        context.moveTo(mouse.x , mouse.y - 7);
-        context.lineTo(mouse.x , mouse.y + 7);
-
-        context.strokeStyle = "black";
-        context.lineWidth = 2;
-        context.stroke();
-        context.closePath();
-
-    }
-
 
         context.clearRect(0, 0, canvas.width, canvas.height);
         platforms.forEach(platform => {
@@ -311,13 +298,15 @@
 
         update();
         collisionDetection();
-        cross.draw();
-        cross.update();
-
-        player.draw(rifle.angle);
-        rifle.update(player.x,player.y);
-        rifle.draw()
+        
+        
        
+        rifle.update(player.x,player.y);
+       
+        cross.update();
+        player.draw(rifle.angle);
+        cross.draw();
+        rifle.draw()
     
        
         
@@ -397,10 +386,12 @@
                 player.speed.x = 0;
             }
         });
-        canvas.addEventListener("mousedown", (event) => {
+        window.addEventListener("mousedown", (event) => {
         rifle.isClicked = true;
         rifle.clickTime = Date.now();
         rifle.currentFrame = 1; // ateş animasyonu
+        player.speed.x = 3*(Math.cos(rifle.angle));//X eksenine göre recoil
+        player.speed.y = 3*(Math.sin(rifle.angle));//Y eksenine göre recoil
     });
        
       
@@ -408,14 +399,4 @@
 
     }
 
-
-    function mouseHandler(){
-        canvas.addEventListener("mousemove",(mouseEvent) => {
-
-            const  clientRect = canvas.getBoundingClientRect();
-            
-            mouse.x = mouseEvent.clientX - clientRect.left;
-            mouse.y = mouseEvent.clientY - clientRect.top;
-        });
-    }
 
