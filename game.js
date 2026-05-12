@@ -17,7 +17,30 @@
 
     let mouseX,mouseY;
 
-    
+    class Bullet {
+     constructor(){
+        
+        this.x;
+        this.y;
+        this.speed ={
+           x:0,
+           y:0
+        }
+        this.angle; 
+        this.isClicked;
+      }
+        
+      update(rifleAngle, rifleX, rifleY, isClicked){
+        this.x = rifleX + 10;
+        this.y = rifleY;
+        this.angle = rifleAngle;
+        this.isClicked = isClicked;
+        
+      }
+    }
+
+
+
     class Platform {
         constructor(x, y, width, height) {
             this.x = x;
