@@ -6,8 +6,8 @@ class Player {
         constructor() {
             this.x=100.0;
             this.y= 100.0;
-            this.height =178;
-            this.width = 120;
+            this.height =88;
+            this.width = 60;
             this.spriteSheet;
             this.frameHeight = 88;
             this.frameWidth = 60;
@@ -23,7 +23,6 @@ class Player {
             this.IDLE = 0;
             this.RUNNING = 1;
             this.JUMPING = 2;
-            this.isDirectionRight = true; //yön kontrolü
             this.currentRow=-1;
            
             this.speed = {
@@ -74,7 +73,7 @@ class Player {
            if((this.speed.x===0)){
             this.animation(this.IDLE,2);
            }
-           else if(this.speed.x>0&&isOnGround){
+           else if(this.speed.x>0 && isOnGround){
             this.isDirectionRight=true;
             this.animation(this.RUNNING,4);
            }
@@ -107,7 +106,7 @@ class Player {
     
 
     context.save();
-    if(this.isDirectionRight&&angle>90.0){ 
+    if(angle>90.0){ 
        
         context.drawImage(
             this.spriteSheet, 

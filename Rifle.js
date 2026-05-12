@@ -2,8 +2,8 @@ class Rifle{
         constructor(x,y){
             this.x = x;
             this.y = y;
-            this.width = 90;
-            this.height = 90;
+            this.width = 30;
+            this.height = 30;
             this.angle; 
             this.spriteSheet = image("./sprite/riflespritesheet.png");
             this.frameWidth = 46;
@@ -25,13 +25,13 @@ class Rifle{
                     this.isClicked = false;
                 }
                 if(this.angle>90.00){
-                    this.x = playerX+player.width-30;
-                    this.y = playerY+100;
+                    this.x = playerX+player.width;
+                    this.y = playerY+45;
                     
                 }   
                 else{
-                    this.x = playerX+30;
-                    this.y = playerY+100;
+                    this.x = playerX;
+                    this.y = playerY+45;
                    
                 }
         }
