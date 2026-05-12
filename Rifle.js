@@ -18,7 +18,7 @@ class Rifle{
         }
         
         update(playerX,playerY){
-                this.angle =Math.abs((90.0-Math.atan2(this.x-cross.x,this.y-cross.y)));//silah ile mouse arasındaki açıyı buluyoruz
+                this.angle =(90.0-Math.atan2(this.x-cross.x,this.y-cross.y));//silah ile crosshair arasındaki açıyı buluyoruz
                 
                 if(this.isClicked && Date.now()-this.clickTime >= 400){
                     this.currentFrame = 0;

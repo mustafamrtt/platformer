@@ -6,8 +6,8 @@
 
     canvas.width = 1280;
     canvas.height = 720;
-    let collision = 0;
-    let acceleration = 0.1;
+    
+    let friction = 0.01;
     let isOnGround = false;
     let isKeyUp = false;
     let friction = 0.1;
