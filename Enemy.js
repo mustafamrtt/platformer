@@ -7,11 +7,12 @@ class Enemy{
         this.width = width;
         this.height = height;
         this.image = image(imagepath);
+        this.deathImage = image("./sprite/Woodcutter_idle.png");
         this.frameCount=4;
         this.frameWidth=29;
         this.frameHeight=48;
         this.currentFrame;
-        
+        this.death = false;
         this.frameTimer;
         this.animationSpeed = 250;
         
@@ -27,10 +28,26 @@ class Enemy{
     }
     update(deltaTime){
 
-        
+        if(this.death){
+            
+            if(this.frameTimer>= this.animationSpeed){
+                this.currentFrame++;
+                this.frameTimer = 0.0;
+            }
+
+
+            
+            if(this.currentFrame>=6){
+
+                 this.frameTimer = 0;
+            }
+            else{
+                this.frameTimer += deltaTime;
+            }
+        }
 
         
-        
+        else{
         if(this.frameTimer >= this.animationSpeed){
             this.currentFrame++;
             this.frameTimer = 0.0;
@@ -39,6 +56,7 @@ class Enemy{
         if(this.currentFrame>=this.frameCount){
             this.currentFrame = 0;
         }
+    }
 
 
         
@@ -49,13 +67,20 @@ class Enemy{
     draw(){
         context.save();
         context.translate(this.x+this.width,this.y);
-       
+        if(this.death){
+            context.scale(-1,1);
+            context.drawImage(this.deathImage,this.currentFrame*this.frameWidth,0,0,0,
+                this.width,this.height
+            )
+        }
+        else{
         context.scale(-1,1);
         context.drawImage(this.image,this.currentFrame*this.frameWidth,0,
             this.frameWidth,this.frameHeight,
             0,0,this.width,this.height // translate yaptığımız için x ve y değerlerini 0 giriyoruz.
         );
         context.restore();
+        }
         
         
     }

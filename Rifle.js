@@ -15,8 +15,22 @@ class Rifle{
             
       
             this.isDirectionRight = true;
+            window.addEventListener("mousedown", (event) => {
+     
+
+        
+       
+
+             if(player.bullets>=1){   
+            rifle.isClicked = true;
+            rifle.clickTime = Date.now();
+            rifle.currentFrame = 1; // ateş animasyonu
+             }
+            });
+            
         
         }
+        
         
         update(playerX,playerY,playerWidth){
                 this.angle =(Math.atan2(this.y+this.height-cross.y,this.x+this.width/2-cross.x));//silah ile crosshair arasındaki açıyı buluyoruz
@@ -41,11 +55,11 @@ class Rifle{
         }
   
         draw(){
-            console.log(this.angle);
+            
             context.save();
             context.translate(this.x+this.width,this.y);
             context.rotate(this.angle);
-            if(Math.abs(this.angle) > Math.PI / 2){
+            if(Math.abs(this.angle) > Math.PI/2){
             
                 context.scale(-1,-1);
             }                                   //silahı aynalıyoruz oyuncunun baktığı yere

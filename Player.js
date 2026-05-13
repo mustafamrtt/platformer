@@ -21,6 +21,7 @@ class Player {
             
           
             this.spriteSheet = image("./sprite/spritesheet.png");
+   
             this.IDLE = 0;
             this.RUNNING = 1;
             this.JUMPING = 2;
@@ -31,7 +32,30 @@ class Player {
                 y:  0
             }
             this.animation(this.IDLE,2);
-            this.timestamp = 0.0;
+            
+
+
+            window.addEventListener("mousedown", (event) => {
+     
+
+        
+                
+
+        
+            if(this.bullets>=1){
+            player.speed.x +=7*(Math.cos(rifle.angle));//X eksenine göre recoil
+            let speedY = 7*(Math.sin(rifle.angle));//Y eksenine göre recoil
+        
+        
+        
+            if(speedY <0)
+             player.speed.y += speedY;
+        
+            
+        }
+        
+    
+    });
 
             
           
@@ -68,7 +92,7 @@ class Player {
         }
         update(deltaTime){
             // Bu kodu update metodunun en başına koy
-            console.log("Mevcut Hız X:", this.speed.x, "| Oynayan Animasyon:", this.currentRow);
+            
            if((this.speed.x===0)){
             this.animation(this.IDLE,2);
            }

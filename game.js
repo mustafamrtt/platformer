@@ -39,6 +39,24 @@
            y:1
         }
         this.angle;
+        window.addEventListener("mousedown", (event) => {
+     
+
+        if(bulletcontrol(this.bullets)){
+            if(bulletCount>=5){
+                bulletCount= -1;
+
+            }    
+        bulletCount++;
+       
+
+        bullets[bulletCount].angle = rifle.angle;
+        bullets[bulletCount].x = rifle.x+rifle.width;
+        bullets[bulletCount].y = rifle.y;
+        bullets[bulletCount].speed.x = -Math.cos(rifle.angle)*10;
+        bullets[bulletCount].speed.y = Math.sin(rifle.angle)*10;
+        }
+    });
         
       }
       
@@ -104,8 +122,11 @@
             this.width = width;
             this.height = height;
             this.image = image("./sprite/grassground.png");
-            this.pattern = context.createPattern(this.image,"repeat")
-        
+
+            this.image.onload = () => {
+    
+            this.pattern = context.createPattern(this.image,"repeat");
+            }
         }
        
         draw(){
@@ -144,9 +165,9 @@
     ]
     
     platforms = [
-        new Platform(-50, 500, 300, 80),
-        new Platform(300,350,300,80),
-        new Platform(700,500,500,80)
+        new Platform(-50, 500, 300, 90),
+        new Platform(300,350,300,90),
+        new Platform(700,500,500,90)
      
      
     
@@ -205,7 +226,7 @@
         })
         enemies.forEach(enemy =>{
             enemy.draw();
-            enemy.update();
+            enemy.update(deltaTime);
         })
      
         
@@ -375,7 +396,7 @@
                 bullet.y + bullet.height>= enemy.y &&
                 bullet.y <= enemy.y + enemy.height)  
             {
-                
+                enemy.death = true;
                 enemy.x = -700;
                 player.bullets+=2;
             
@@ -427,36 +448,7 @@
             }
         });
         
-        window.addEventListener("mousedown", (event) => {
-     
-
-        if(bulletcontrol(this.bullets)){
-            if(bulletCount>=5){
-                bulletCount= -1;
-
-            }    
-        bulletCount++;
-       
-
-        bullets[bulletCount].angle = rifle.angle;
-        bullets[bulletCount].x = rifle.x+rifle.width;
-        bullets[bulletCount].y = rifle.y;
-        bullets[bulletCount].speed.x = -Math.cos(rifle.angle)*10;
-        bullets[bulletCount].speed.y = Math.sin(rifle.angle)*10;
-      
-        rifle.isClicked = true;
-        rifle.clickTime = Date.now();
-        rifle.currentFrame = 1; // ateş animasyonu
-        player.speed.x +=7*(Math.cos(rifle.angle));//X eksenine göre recoil
-        let speedY = 7*(Math.sin(rifle.angle));//Y eksenine göre recoil
         
-        
-        
-        if(speedY <0){
-            player.speed.y += speedY;
-        }
-    }
-    });
        
       
 
