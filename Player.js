@@ -17,10 +17,10 @@ class Player {
             this.frameCount=0;
             this.frameTimer=0;
             this.animationspeed = 250;
-            this.bullets=5;
+            this.bullets=1;
             
           
-
+            this.spriteSheet = image("./sprite/spritesheet.png");
             this.IDLE = 0;
             this.RUNNING = 1;
             this.JUMPING = 2;
@@ -30,6 +30,8 @@ class Player {
                 x: 0,
                 y:  0
             }
+            this.animation(this.IDLE,2);
+            this.timestamp = 0.0;
 
             
           
@@ -43,14 +45,10 @@ class Player {
             }
             return position;
         }
-        start(){
-            this.spriteSheet = image("./sprite/spritesheet.png");
+        
+           
 
-            this.animation(this.IDLE,2);
-            this.timestamp = 0.0;
-
-
-        }
+    
        
         animation(newRow, frameCount){
             if(this.currentRow!= newRow){
@@ -107,7 +105,7 @@ class Player {
     
 
     context.save();
-    if(angle>90.0){ 
+    if(cross.x>=this.x+this.width/2){ 
        
         context.drawImage(
             this.spriteSheet, 
@@ -116,7 +114,7 @@ class Player {
         );
     }
     else{ 
-        context.translate(this.x + this.width, this.y);
+        context.translate(this.x+this.width, this.y);
         context.scale(-1, 1); 
         
         context.drawImage(

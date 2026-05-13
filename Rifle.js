@@ -15,24 +15,25 @@ class Rifle{
             
       
             this.isDirectionRight = true;
+        
         }
         
-        update(playerX,playerY){
-                this.angle =(90.0-Math.atan2(this.x-cross.x,this.y-cross.y));//silah ile crosshair arasındaki açıyı buluyoruz
+        update(playerX,playerY,playerWidth){
+                this.angle =(Math.atan2(this.y+this.height-cross.y,this.x+this.width/2-cross.x));//silah ile crosshair arasındaki açıyı buluyoruz
                 
                 if(this.isClicked && Date.now()-this.clickTime >= 400){
                     this.currentFrame = 0;
                     this.isClicked = false;
                 }
                 
-                if(this.angle>90.00&&this.angle<93.0){
+                if(cross.x >= playerX+playerWidth/2){
                   
-                    this.x = playerX+player.width-10;
+                    this.x = playerX+playerWidth-35;
                     this.y = playerY+45;
                     
                 }   
                 else{
-                    this.x = playerX;
+                    this.x = playerX-25;
                     this.y = playerY+45;
                 }
                    
@@ -42,14 +43,16 @@ class Rifle{
         draw(){
             console.log(this.angle);
             context.save();
-            context.translate(this.x,this.y);
+            context.translate(this.x+this.width,this.y);
             context.rotate(this.angle);
-            if(this.angle>90.00){
-             context.scale(-1,-1);//silahı aynalıyoruz oyuncunun baktığı yere
-            }
+            if(Math.abs(this.angle) > Math.PI / 2){
+            
+                context.scale(-1,-1);
+            }                                   //silahı aynalıyoruz oyuncunun baktığı yere
             else{
-                context.scale(-1,1);//silahı aynalıyoruz oyuncunun baktığı yöne
+                context.scale(-1,1); 
             }
+           
             context.drawImage(this.spriteSheet,this.currentFrame*this.frameWidth,0,this.frameWidth,this.frameHeight,
                 this.width/-2.0,this.height/-2.0,this.width,this.height
             );//çizim noktasını merkeze akip rotasyon veriyoruz

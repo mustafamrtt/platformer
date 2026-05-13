@@ -4,19 +4,20 @@
     const gravity = 0.1;
 
 
-    canvas.width = 1280;
-    canvas.height = 720;
-    
+    canvas.width = 1920;
+    canvas.height = 1080;
+
     
     let isOnGround = false;
     let isKeyUp = false;
-    let friction = 0.1;
+    let friction = 0.125;
 
     let speedMultiplier = 3;
     let bulletCount=-1;
-
+    let gameOver = 0;
+    
     let mouseX,mouseY;
-
+    
     class Bullet {
      constructor(){
         
@@ -102,42 +103,74 @@
             this.y = y;
             this.width = width;
             this.height = height;
+            this.image = image("./sprite/grassground.png");
+            this.pattern = context.createPattern(this.image,"repeat")
         
         }
        
         draw(){
-            context.fillRect(this.x, this.y, this.width, this.height);
+            
+
+
+           if(!this.pattern){
+                return;
+           }
+            // piksellerin çok büyümemesi için yanyana döşüyoruz 
+            const matrix = new DOMMatrix();  
+
+            matrix.translateSelf(this.x,this.y-15);
+
+            this.pattern.setTransform(matrix);  
+
+            context.fillStyle = this.pattern;
+
+            context.fillRect(this.x,this.y-15,this.width,this.height);
+         
         }
     }
-   
 
+
+   
+    let background= [];
     let platforms = [];
     let player = new Player(); 
     let rifle = new Rifle(player.getPosition().x,player.getPosition().y);
     
     let cross = new Crosshair(mouseX,mouseY);
-  
     
+  
+    let enemies = [
+        new Enemy(800,400,96,94,"./sprite/Woodcutter_idle.png")
+    ]
     
     platforms = [
-        new Platform(0, 500, 200, 500),
-        new Platform(300, 400, 200, 20),
-        new Platform(600, 300, 200, 20),
-        new Platform(900, 200, 2000, 20)
+        new Platform(-50, 500, 300, 80),
+        new Platform(300,350,300,80),
+        new Platform(700,500,500,80)
+     
+     
     
         
     ];
+     background    =  [
+        new Background(0,300,100,200,"./sprite/tree.png"),
+        new Background(300,150,100,200,"./sprite/tree.png"),
+        new Background(300,320,30,30,"./sprite/rock.png"),
+        new Background(700,475,30,30,"./sprite/rock.png"),
+        new Background(950,430,70,70,"./sprite/plant.png"),
+        new Background(540,350,70,50,"./sprite/leaf.png"),
+        new Background(750,470,30,30,"./sprite/flower.png"),
+        new Background(900,470,30,40,"./sprite/rock2.png"),
+
+    ]
     bullets =  [
         new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet(),
         new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet(),
-        new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet(),
-        new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet(),
-        new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet(),
-        new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet(),
-        new Bullet(),new Bullet(),new Bullet(), new Bullet(), new Bullet(),
+        
+        
     ]
     
-    player.start();
+
    
     
    
@@ -150,30 +183,44 @@
 
 
         context.clearRect(0, 0, canvas.width, canvas.height);
-        platforms.forEach(platform => {
-            
-            platform.draw();
-
-        });
+       
        for(var i=0;i<=bulletCount;i++){
            
             bullets[i].draw();
             bullets[i].update(deltaTime);
            
        }
+       
+       
+        player.draw(rifle.angle);
+        
+        platforms.forEach(platform => {
+            
+            platform.draw();
 
+        });
+        background.forEach(object=>{
+            
+            object.draw();
+        })
+        enemies.forEach(enemy =>{
+            enemy.draw();
+            enemy.update();
+        })
      
-        player.update(deltaTime);
+        
 
+        
+        
         update();
         collisionDetection();
         
         
        
-        rifle.update(player.x,player.y);
+        rifle.update(player.x,player.y,player.width);
         
         cross.update();
-        player.draw(rifle.angle);
+        player.update(deltaTime);
         cross.draw();
         rifle.draw()
     
@@ -185,6 +232,8 @@
    
     gameLoop();
 
+    
+
 
     function update(){
         
@@ -192,7 +241,7 @@
         player.speed.y += gravity;
         player.y += player.speed.y;
         
-
+        
         if(player.speed.x > 0 && isOnGround && isKeyUp){
             player.speed.x -= friction;
             if(player.speed.x < 0.1){
@@ -204,6 +253,7 @@
             player.speed.x = 0;
            }
         }
+       
         for(var i=0;i<=bulletCount;i++){
             bullets[i].x += bullets[i].speed.x;
             bullets[i].y -= bullets[i].speed.y;
@@ -211,17 +261,25 @@
 
         
         
-      let kaymaMiktari = player.x - 500; 
+      let offset = player.x - 500; 
     
     
-    if (kaymaMiktari !== 0) {
+    if (offset !== 0) {
         
        
         player.x = 500;
-      
+        
         platforms.forEach(platform => {
-            platform.x -= kaymaMiktari;
+            platform.x -= offset;
         });
+        background.forEach(object => {
+            object.x -= offset;
+        });
+        enemies.forEach(enemy =>{
+              enemy.x -= offset;
+        });
+      
+      
     }
 
         
@@ -230,7 +288,7 @@
         platforms.forEach(platform => {
             if (player.x <= platform.x + platform.width &&
                 player.x + player.width >= platform.x&&
-                player.y + player.height >= platform.y &&
+                player.y + player.height>= platform.y &&
                 player.y <= platform.y + platform.height
                 ) {
         
@@ -286,7 +344,52 @@
 
             }
 
+        
+       
+            
+            
+
         });
+        enemies.forEach(enemy =>{
+             if(player.x <= enemy.x + enemy.width &&
+                player.x + player.width >= enemy.x&&
+                player.y + player.height>= enemy.y &&
+                player.y <= enemy.y + enemy.height)  
+            {
+                
+                player.speed.x = 0;
+                player.speed.y = 0;
+                player.x = -200;
+                player.y = 100;
+               
+                offset = 0;
+            
+
+            }
+        });
+        enemies.forEach(enemy =>{
+            bullets.forEach(bullet =>{
+               
+             if(bullet.x <= enemy.x + enemy.width &&
+                bullet.x + bullet.width >= enemy.x&&
+                bullet.y + bullet.height>= enemy.y &&
+                bullet.y <= enemy.y + enemy.height)  
+            {
+                
+                enemy.x = -700;
+                player.bullets+=2;
+            
+
+            }
+        
+   
+            
+         });
+        });
+   
+       
+   
+   
     }
     function bulletcontrol(bullets){
         if(player.bullets>0){
@@ -327,15 +430,19 @@
         window.addEventListener("mousedown", (event) => {
      
 
-        if(bulletcontrol(this.bullets)){    
+        if(bulletcontrol(this.bullets)){
+            if(bulletCount>=5){
+                bulletCount= -1;
+
+            }    
         bulletCount++;
        
 
         bullets[bulletCount].angle = rifle.angle;
         bullets[bulletCount].x = rifle.x+rifle.width;
         bullets[bulletCount].y = rifle.y;
-        bullets[bulletCount].speed.x = -Math.cos(rifle.angle)*4;
-        bullets[bulletCount].speed.y = Math.sin(rifle.angle)*4;
+        bullets[bulletCount].speed.x = -Math.cos(rifle.angle)*10;
+        bullets[bulletCount].speed.y = Math.sin(rifle.angle)*10;
       
         rifle.isClicked = true;
         rifle.clickTime = Date.now();
@@ -345,7 +452,7 @@
         
         
         
-        if(isOnGround && speedY < 0){
+        if(speedY <0){
             player.speed.y += speedY;
         }
     }
