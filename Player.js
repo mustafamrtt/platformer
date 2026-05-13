@@ -16,7 +16,8 @@ class Player {
         
             this.frameCount=0;
             this.frameTimer=0;
-            this.animationspeed = 350;
+            this.animationspeed = 250;
+            this.bullets=5;
             
           
 

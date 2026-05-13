@@ -24,16 +24,19 @@ class Rifle{
                     this.currentFrame = 0;
                     this.isClicked = false;
                 }
-                if(this.angle>90.00){
-                    this.x = playerX+player.width;
+                
+                if(this.angle>90.00&&this.angle<93.0){
+                  
+                    this.x = playerX+player.width-10;
                     this.y = playerY+45;
                     
                 }   
                 else{
                     this.x = playerX;
                     this.y = playerY+45;
-                   
                 }
+                   
+                
         }
   
         draw(){
