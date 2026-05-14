@@ -21,11 +21,11 @@ class Crosshair{
         draw(){
             context.beginPath();
             context.moveTo(mouseX,mouseY);
-            context.lineTo(mouseX-6,mouseY);
-            context.lineTo(mouseX+6,mouseY);
+            context.lineTo(mouseX-9,mouseY);
+            context.lineTo(mouseX+9,mouseY);
             context.moveTo(mouseX,mouseY);
-            context.lineTo(mouseX,mouseY+6);
-             context.lineTo(mouseX,mouseY-6);
+            context.lineTo(mouseX,mouseY+9);
+             context.lineTo(mouseX,mouseY-9);
             context.strokeStyle= "red";
             context.stroke();
             context.closePath();

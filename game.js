@@ -18,100 +18,7 @@
     
     let mouseX,mouseY;
     
-    class Bullet {
-     constructor(){
-        
-        this.x;
-        this.y;
-        this.height=15;
-        this.width=15;
-        this.frameWidth=15;
-        this.frameHeight=7;
-        this.currentFrame=0;
-        this.frameCount=4;
-        this.frameTimer=0.0;
-        this.animationSpeed=350;
-
-        this.image = image("./sprite/bulletspritesheet.png");
-        this.animation(4);
-        this.speed ={
-           x:1,
-           y:1
-        }
-        this.angle;
-        window.addEventListener("mousedown", (event) => {
-     
-
-        if(bulletcontrol(this.bullets)){
-            if(bulletCount>=5){
-                bulletCount= -1;
-
-            }    
-        bulletCount++;
-       
-
-        bullets[bulletCount].angle = rifle.angle;
-        bullets[bulletCount].x = rifle.x+rifle.width;
-        bullets[bulletCount].y = rifle.y;
-        bullets[bulletCount].speed.x = -Math.cos(rifle.angle)*10;
-        bullets[bulletCount].speed.y = Math.sin(rifle.angle)*10;
-        }
-    });
-        
-      }
-      
-      animation(frameCount){
-            this.frameCount = frameCount;
-         
-            this.currentFrame = 0;
-            this.frameTimer = 0.0;
-            
-
-
-      }
-      update(deltaTime){
-
-        
-        this.frameTimer += deltaTime;
-
-        if(this.frameTimer>= this.animationSpeed)
-        {
-            this.currentFrame++;
-            this.frameTimer = 0.0;
-        } 
-        if(this.currentFrame>=this.frameCount)
-            this.currentFrame = 0;
-
-
-        
-            
-        
-        
-        
-
-        
-      }
-      draw(){
-
-            context.save();
-            context.translate(this.x,this.y)
-            context.rotate(this.angle);
-            if(!this.angle>90.0)
-                   context.scale(-1,-1); 
-            
-        
-            context.drawImage(this.image,
-                this.currentFrame*this.frameWidth,0,
-                this.frameWidth,this.frameHeight,
-                0,0,this.width,this.height
-
-            )
-            context.restore();
-       
-
-
-      }
-    }
+    
 
 
 
@@ -166,7 +73,8 @@
         new Enemy(6400,400,96,94,"./sprite/Woodcutter_idle.png"),
         new Enemy(7600,700,96,94,"./sprite/Woodcutter_idle.png"),
         new Enemy(8000,700,96,94,"./sprite/Woodcutter_idle.png"),
-        new Enemy(8000,700,96,94,"./sprite/Woodcutter_idle.png")
+        new Enemy(10500,250,96,94,"./sprite/Woodcutter_idle.png"),
+        new Enemy(10500,250,96,94,"./sprite/Woodcutter_idle.png")
     ]
     
     platforms = [
@@ -201,11 +109,17 @@
         new Platform(13500, 725, 100, 50),  
         new Platform(13750, 650, 100, 50),
         new Platform(14000, 700, 1000, 100),
-        new Platform(15600, 500, 500, 100)
-        
+        new Platform(15600, 500, 500, 100),
+        new Platform(16250, 600, 40, 100),
+        new Platform(16450, 550, 40, 100),
+        new Platform(16700, 625, 40, 100),
+        new Platform(16900, 575, 40, 100),
+        new Platform(17250, 610, 40, 100),
+        new Platform(17500, 700, 40, 100),
+        new Platform(17700, 630, 40, 100),
+        new Platform(18000, 600, 1000, 100),
+        new Platform(19000, 500, 500, 100)
 
-     
-     
     
         
     ];
@@ -448,7 +362,7 @@
     }
     function bulletcontrol(bullets){
         if(player.bullets>0){
-            //player.bullets-=1;
+            player.bullets-=1;
             return 1;
         }
         else{
@@ -488,5 +402,24 @@
 
 
     }
+
+    window.addEventListener("mousedown", (event) => {
+     
+
+        if(bulletcontrol(this.bullets)){
+            if(bulletCount>=9){
+                bulletCount= -1;
+
+            }    
+        bulletCount++;
+       
+
+        bullets[bulletCount].angle = rifle.angle;
+        bullets[bulletCount].x = rifle.x+rifle.width;
+        bullets[bulletCount].y = rifle.y;
+        bullets[bulletCount].speed.x = -Math.cos(rifle.angle)*10;
+        bullets[bulletCount].speed.y = Math.sin(rifle.angle)*10;
+        }
+    });
 
 
