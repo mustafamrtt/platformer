@@ -1,4 +1,4 @@
-## Web Tabanlı Programlama Dönem Projesi
+<img width="1798" height="900" alt="image" src="https://github.com/user-attachments/assets/f4c14ba6-2225-4a8e-ab5a-4c04084924ec" />## Web Tabanlı Programlama Dönem Projesi
 [cite_start]Bursa Teknik Üniversitesi, Bilgisayar Mühendisliği Bölümü[cite: 1, 2].
 
 [cite_start]**Geliştiriciler:** Mustafa Mert (24360859050) ve Efe Aslan (24360859073)[cite: 4, 5].
@@ -23,7 +23,8 @@
 
 
 
-![Oyun İçi Görüntü 1](<img width="1798" height="900" alt="image" src="https://github.com/user-attachments/assets/3be15174-7a28-4122-b1e0-26bb8eaca656" />
+![Oyun İçi Görüntü 1](  <img width="1798" height="900" alt="image" src="https://github.com/user-attachments/assets/08b70dff-8e4f-44f0-b95c-70605f7ed01d" />
+
 ) 
 ![Oyun İçi Görüntü 2](<img width="1798" height="900" alt="image" src="https://github.com/user-attachments/assets/0253a295-8c5d-43ea-b326-2ab9a1f4382a" />
 
