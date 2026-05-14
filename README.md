@@ -20,9 +20,13 @@
 ##  Oyun İçi Görüntüler
 [cite_start]*(Aşağıdaki görseller oyunun temel platform dinamiklerini ve düşman yerleşimlerini göstermektedir)*[cite: 53].
 
-![Oyun İçi Görüntü 1](<img width="1600" height="776" alt="Oyun1" src="https://github.com/user-attachments/assets/cfb304e9-4307-406a-93e8-d1027f5107f3" />
+
+
+
+![Oyun İçi Görüntü 1](<img width="1798" height="900" alt="image" src="https://github.com/user-attachments/assets/3be15174-7a28-4122-b1e0-26bb8eaca656" />
 ) 
-![Oyun İçi Görüntü 2](<img width="1600" height="800" alt="Oyun2" src="https://github.com/user-attachments/assets/de99edbb-cbea-4cad-9478-7e876785b589" />
+![Oyun İçi Görüntü 2](<img width="1798" height="900" alt="image" src="https://github.com/user-attachments/assets/0253a295-8c5d-43ea-b326-2ab9a1f4382a" />
+
 )
 
 
