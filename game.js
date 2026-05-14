@@ -18,10 +18,37 @@
     
     let mouseX,mouseY;
     
+    let gunsound  = document.getElementById("gunfire");
+    let music = document.getElementById("background");
+
+    
     
 
+ 
+   
+    class bulletGui{
+
+        constructor(){
+            this.x;
+            this.y;
+            this.count;
+            context.font= "100px Arial";
+        }
+
+        update(){
+            this.count = "[]"+player.bullets;
+            this.x = player.x-500;
+            this.y = 1050;
+        }
+
+        draw(){
+            
+            context.fillText(this.count,this.x, this.y);
+        }
 
 
+    }
+   
     class Platform {
         constructor(x, y, width, height) {
             this.x = x;
@@ -69,7 +96,7 @@
     let rifle = new Rifle(player.getPosition().x,player.getPosition().y);
     
     let cross = new Crosshair(mouseX,mouseY);
-    
+
   
     let enemies = [
         new Enemy(800,400,96,94,"./sprite/Woodcutter_idle.png"),
@@ -148,7 +175,7 @@
         new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet(),
         new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet()
     ]
-    
+    let bullet =new bulletGui();
 
    
     
@@ -159,16 +186,16 @@
         let deltaTime = Date.now()-lastTime;
         lastTime = Date.now();
         
-
+        
      
         context.clearRect(0, 0, canvas.width, canvas.height);
-       
-       for(var i=0;i<=bulletCount;i++){
+        
+        for(var i=0;i<=bulletCount;i++){
            
             bullets[i].draw();
             bullets[i].update(deltaTime);
            
-       }
+        }
        
        
         player.draw(rifle.angle);
@@ -199,12 +226,12 @@
         
        
         rifle.update(player.x,player.y,player.width);
-        
+        bullet.update(player.x,player.y);
         cross.update();
         player.update(deltaTime);
         cross.draw();
         rifle.draw()
-    
+        bullet.draw();
         requestAnimationFrame(gameLoop);
 
     }
@@ -214,7 +241,7 @@
     gameLoop();
 
     
-
+    
 
     function update(){
         
@@ -299,7 +326,7 @@
 
         bullets.forEach(bullet => {
             
-            if (bullet.y === -9999) return; 
+            if (bullet.y === -700) return; 
 
             if (bullet.x <= platform.x + platform.width &&
                 bullet.x + bullet.width >= platform.x &&
@@ -307,7 +334,9 @@
                 bullet.y <= platform.y + platform.height)  
             {
                 
-                bullet.y = -9999; 
+                bullet.y = -700; 
+                bullet.speed.x = 0;
+                bullet.speed.y = 0;
             }
         });       
     });
@@ -323,17 +352,15 @@
             player.y + player.height >= enemy.y &&
             player.y <= enemy.y + enemy.height)  
         {   
+            gameOver = 1;
             
-            let offset = 0;
-            player.speed.x = 0;
-            player.speed.y = 0;
-            player.x = offset;
-            player.y = 100;
+
+
         }
 
         
         bullets.forEach(bullet => {
-            if (bullet.y === -9999) return; 
+            if (bullet.y === -700 ) return; 
 
             if (bullet.x <= enemy.x + enemy.width &&
                 bullet.x + bullet.width >= enemy.x &&
@@ -342,7 +369,7 @@
             {
                
                 enemy.death = true;
-                bullet.y = -9999; 
+                bullet.y = -700; 
                 player.bullets += 2;
                 
                 setTimeout(() => { 
@@ -351,23 +378,22 @@
             }
         });
     });
-}
-   
-     spikes.forEach(spike => {
+    spikes.forEach(spike => {
     
         if (player.x <= spike.x + spike.width &&
              player.x + player.width >= spike.x &&
              player.y + player.height >= spike.y &&
              player.y <= spike.y + spike.height) {
-        
-       
-                 player.speed.x = 0;
-                 player.speed.y = 0;
-                 player.x = -200; 
-                 player.y = 100;
-                 offset = 0; 
+                
+                  
+                gameOver = 1;
+               
       }
       });
+
+}
+   
+  
 
    
     
@@ -386,7 +412,7 @@
     function keyHandler() {
         window.addEventListener("keydown", (event) => {
             
-            
+           
             
             if (event.code === "KeyD") {
                 player.speed.x = speedMultiplier;
@@ -424,12 +450,20 @@
             }    
         bulletCount++;
        
-
+        
+        gunsound.play();      
+        music.play(); 
+       
+ 
         bullets[bulletCount].angle = rifle.angle;
         bullets[bulletCount].x = rifle.x+rifle.width;
         bullets[bulletCount].y = rifle.y;
         bullets[bulletCount].speed.x = -Math.cos(rifle.angle)*10;
         bullets[bulletCount].speed.y = Math.sin(rifle.angle)*10;
+
+        
+        
+    
         }
     });
 
