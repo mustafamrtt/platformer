@@ -29,11 +29,12 @@
             this.width = width;
             this.height = height;
             this.image = image("./sprite/grassground.png");
-
+            
             this.image.onload = () => {
     
             this.pattern = context.createPattern(this.image,"repeat");
             }
+            this.matrix = new DOMMatrix();
         }
        
         draw(){
@@ -44,11 +45,13 @@
                 return;
            }
             // piksellerin çok büyümemesi için yanyana döşüyoruz 
-            const matrix = new DOMMatrix();  
+             
+            this.matrix.e = this.x;
+            this.matrix.f = this.y-15;
 
-            matrix.translateSelf(this.x,this.y-15);
+            
 
-            this.pattern.setTransform(matrix);  
+            this.pattern.setTransform(this.matrix);  
 
             context.fillStyle = this.pattern;
 
@@ -69,13 +72,19 @@
   
     let enemies = [
         new Enemy(800,400,96,94,"./sprite/Woodcutter_idle.png"),
-        new Enemy(1700,500,96,94,"./sprite/Woodcutter_idle.png"),
+        new Enemy(2250,500,96,94,"./sprite/Woodcutter_idle.png"),
         new Enemy(6400,400,96,94,"./sprite/Woodcutter_idle.png"),
         new Enemy(7600,700,96,94,"./sprite/Woodcutter_idle.png"),
         new Enemy(8000,700,96,94,"./sprite/Woodcutter_idle.png"),
         new Enemy(10500,250,96,94,"./sprite/Woodcutter_idle.png"),
         new Enemy(10500,250,96,94,"./sprite/Woodcutter_idle.png")
-    ]
+    ];
+
+    let spikes = [ 
+       new Spike(1600, 560, 80,80,"./sprite/Spike.png"),
+       new Spike(1900, 560, 80,80,"./sprite/Spike.png"),
+       
+    ];
     
     platforms = [
         new Platform(-50, 500, 250, 90),
@@ -177,7 +186,9 @@
             enemy.update(deltaTime);
         })
      
-        
+        spikes.forEach(spike => {
+            spike.draw();
+       });
 
         
         
@@ -246,6 +257,9 @@
         });
         enemies.forEach(enemy =>{
               enemy.x -= offset;
+        });
+        spikes.forEach(spike => {
+              spike.x -= offset;
         });
       
       
@@ -358,11 +372,27 @@
    
        
    
+     spikes.forEach(spike => {
+    
+        if (player.x <= spike.x + spike.width &&
+             player.x + player.width >= spike.x &&
+             player.y + player.height >= spike.y &&
+             player.y <= spike.y + spike.height) {
+        
+       
+                 player.speed.x = 0;
+                 player.speed.y = 0;
+                 player.x = -200; 
+                 player.y = 100;
+                 offset = 0; 
+      }
+      });
+
    
     }
     function bulletcontrol(bullets){
         if(player.bullets>0){
-            player.bullets-=1;
+            //player.bullets-=1;
             return 1;
         }
         else{
