@@ -256,138 +256,92 @@
         
     }
     function collisionDetection() {
-        platforms.forEach(platform => {
-            if (player.x <= platform.x + platform.width &&
-                player.x + player.width >= platform.x&&
-                player.y + player.height>= platform.y &&
-                player.y <= platform.y + platform.height
-                ) {
+     
         
-                
-                
-
-                if(player.speed.y > 0 && player.y + player.height <= platform.y + player.speed.y) {
-                        player.y = platform.y - player.height;
-                      
-                        if(player.speed.y > 0) {
-                            player.speed.y = 0;
-                            isOnGround = true;
-                            
-
-                        }
-                        
-                        
-
-                        
-
-                    }
-                else
-                    isOnGround = false;
-                    
-
-                   
-                
-                           
-                
-                
-                
-
-                if(!isOnGround){
-                    player.speed.x = 0;
-                }
-
-              
-                
-            
-            }
-          
-           
-           
-        });
-        platforms.forEach(platform =>{
-            if(player.x >= platform.x&&
-               player.x <= platform.x+platform.width
-            ){
-                if((player.y< platform.y-platform.height||player.y>platform.y-platform.height)&&!(player.y == platform.y-player.height)){//platformun üstünde değilse
-                    isOnGround = false;                                   
-                }
-
-
-            }
-
+    platforms.forEach(platform => {
         
-       
-            
-            
-
-        });
-        enemies.forEach(enemy =>{
-             if(player.x <= enemy.x + enemy.width &&
-                player.x + player.width >= enemy.x&&
-                player.y + player.height>= enemy.y &&
-                player.y <= enemy.y + enemy.height)  
-            {   
-
-               
-                offset = 0;
-                player.speed.x = 0;
+        
+        if (player.x <= platform.x + platform.width &&
+            player.x + player.width >= platform.x &&
+            player.y + player.height >= platform.y &&
+            player.y <= platform.y + platform.height) 
+        {
+            if(player.speed.y > 0 && player.y + player.height <= platform.y + player.speed.y) {
+                player.y = platform.y - player.height;
                 player.speed.y = 0;
-                player.x = offset;
-                player.y = 100;
-               
-               
-            
-
+                isOnGround = true;
+            } else {
+                isOnGround = false;
             }
-        });
-        enemies.forEach(enemy =>{
-            bullets.forEach(bullet =>{
-               
-             if(bullet.x <= enemy.x + enemy.width &&
-                bullet.x + bullet.width >= enemy.x&&
-                bullet.y + bullet.height>= enemy.y &&
+
+            if(!isOnGround){
+                player.speed.x = 0;
+            }
+        } else if (player.x >= platform.x && player.x <= platform.x + platform.width) {
+            // Platformun üstünde değilse düşme kontrolü
+            if(player.y !== platform.y - player.height) {
+                isOnGround = false;                                   
+            }
+        }
+
+        bullets.forEach(bullet => {
+            
+            if (bullet.y === -9999) return; 
+
+            if (bullet.x <= platform.x + platform.width &&
+                bullet.x + bullet.width >= platform.x &&
+                bullet.y + bullet.height >= platform.y &&
+                bullet.y <= platform.y + platform.height)  
+            {
+                // Mermi duvara/platforma çarptı! Mermiyi yok et.
+                bullet.y = -9999; 
+            }
+        });       
+    });
+
+
+    enemies.forEach(enemy => {
+        
+        if (enemy.death) return;
+
+        
+        if (player.x <= enemy.x + enemy.width &&
+            player.x + player.width >= enemy.x &&
+            player.y + player.height >= enemy.y &&
+            player.y <= enemy.y + enemy.height)  
+        {   
+            
+            let offset = 0;
+            player.speed.x = 0;
+            player.speed.y = 0;
+            player.x = offset;
+            player.y = 100;
+        }
+
+        
+        bullets.forEach(bullet => {
+            if (bullet.y === -9999) return; 
+
+            if (bullet.x <= enemy.x + enemy.width &&
+                bullet.x + bullet.width >= enemy.x &&
+                bullet.y + bullet.height >= enemy.y &&
                 bullet.y <= enemy.y + enemy.height)  
             {
-                
-                
+               
                 enemy.death = true;
+                bullet.y = -9999; 
+                player.bullets += 2;
                 
-
-               setTimeout(()=>{ //animasyonun gözükmesi için gecikme
-
-                enemy.x = -700;
-
-               },1250);
-
-                player.bullets+=2;
-            
-            
-
+                setTimeout(() => { 
+                    enemy.x = -700;
+                }, 1250);
             }
-        
-   
-            
-         });
         });
-        platforms.forEach(platform =>{
-            bullets.forEach(bullet =>{
-            if(bullet.x <= platform.x + platform.width &&
-                bullet.x + bullet.width >= platform.x&&
-                bullet.y + bullet.height>= bullet.y &&
-                bullet.y <= bullet.y + bullet.height)  {
-
-                   
-
-                }
-
-
-            });       
-        });
-   
-       
+    });
+}
    
    
-    }
+    
     function bulletcontrol(bullets){
         if(player.bullets>0){
             player.bullets-=1;
