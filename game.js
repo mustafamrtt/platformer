@@ -4,7 +4,7 @@
     const gravity = 0.1;
 
 
-    canvas.width = 1280;
+    canvas.width = 1920;
     canvas.height = 960;
 
     
@@ -29,8 +29,8 @@
     
 
  
-   
-    class bulletGui{
+    
+    class BulletGui{
 
         constructor(){
             this.x;
@@ -52,98 +52,8 @@
             context.fillText(this.count,this.x, this.y);
             context.drawImage(this.image,this.x-60,this.y-90,50,100);
         }
-        start(){
-            this.spriteSheet = image("spritesheet.png");
-
-            this.animation(this.IDLE,2);
-            this.timestamp = 0.0;
-
-
-        }
-        animation(newRow, frameCount){
-            if(this.currentRow!= newRow){
-                this.currentRow = newRow;
-                this.frameCount = frameCount;
-                this.currentFrame = 0;
-                this.frameTimer = 0.0;
-
-
-
-
-
-                
-                
-            }
-
-        }
-        update(deltaTime){
-            // Bu kodu update metodunun en başına koy
-            console.log("Mevcut Hız X:", this.speed.x, "| Oynayan Animasyon:", this.currentRow);
-           if((this.speed.x===0)){
-            this.animation(this.IDLE,2);
-           }
-           else if(this.speed.x>0&&isOnGround){
-            this.isDirectionRight=true;
-            this.animation(this.RUNNING,4);
-           }
-           else if ( this.speed.x<0&&isOnGround){
-            this.isDirectionRight=false;
-            this.animation(this.RUNNING,4);
-           }
-           else if(!isOnGround){
-            this.animation(this.JUMPING,3);
-           }
-           
-            this.frameTimer += deltaTime;
-             
-            if(this.frameTimer >= this.animationspeed){
-                this.currentFrame++;
-                this.frameTimer = 0.0;
-
-            }
-            if(this.currentFrame >= this.frameCount){
-                this.currentFrame = 0;
-            }
-            
-
-        }
         
-        draw(angle){
-            // Kaynaktan (spritesheet) kesilecek alanın koordinatları (Burayı değiştirmedin)
-    let frameX = this.currentFrame * this.frameWidth;
-    let frameY = this.currentRow * this.frameHeight;
-    
-
-    context.save(); // Canvas ayarlarını kaydet
-
-    if(this.isDirectionRight&&angle>90.0){ 
-        // --- SAĞA BAKIYORSA (Normal Çizim) ---
-        // Son iki parametreye DİKKAT: Artık 'this.width' ve 'this.height' (büyük boyutlar) kullanıyoruz.
-        context.drawImage(
-            this.spriteSheet, 
-            frameX, frameY, this.frameWidth, this.frameHeight, // Spritedaki orijinal boyut (kesim)
-            this.x, this.y, this.width, this.height // Ekranda çizilecek büyük boyut
-        );
-    }
-    else{ 
-        // --- SOLA BAKIYORSA (Aynalayarak Çizim) ---
-        // Karakteri büyüttüğümüz için, aynalama kaydırmasını da (translate) büyük boyuta göre yapmalıyız.
-        // DİKKAT: 'this.x + this.frameWidth' yerine 'this.x + this.width' yazıyoruz!
-        context.translate(this.x + this.width, this.y);
-        context.scale(-1, 1); // X ekseninde ters çevir (aynalama efekti)
         
-        context.drawImage(
-            this.spriteSheet, 
-            frameX, frameY, this.frameWidth, this.frameHeight, // Spritedaki orijinal boyut (kesim)
-            0, 0, this.width, this.height // Ekranda çizilecek büyük boyut (translate yapıldığı için x:0, y:0)
-        );
-    }
-    context.restore(); // Canvas ayarlarını eski haline getir
-}
-    
-        
-
-
     }
    
     class Platform {
@@ -214,7 +124,7 @@
        new Spike(1600, 560, 80, 80,"./sprite/Spike.png"),
        new Spike(1900, 560, 80, 80,"./sprite/Spike.png"),
        new Spike(3150, 180, 80, 80,"./sprite/Spike.png"),
-       new Spike(3350, 180, 80, 80,"./sprite/Spike.png"),
+       new Spike(3400, 180, 80, 80,"./sprite/Spike.png"),
        new Spike(3800, 310, 80, 80,"./sprite/Spike.png"),
        new Spike(3840, 310, 80, 80,"./sprite/Spike.png"),
        new Spike(3880, 310, 80, 80,"./sprite/Spike.png"),
@@ -365,7 +275,7 @@
         new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet(),
         new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet()
     ]
-    let bullet =new bulletGui();
+    let bullet =new BulletGui();
 
    
     
@@ -582,7 +492,7 @@
                
                 enemy.death = true;
                 bullet.y = -700; 
-                player.bullets += 2;
+                player.bullets += 1;
                 
                 setTimeout(() => { 
                     enemy.x = -700;
@@ -666,13 +576,13 @@
     window.addEventListener("mousedown", (event) => {
      
 
-        if(bulletcontrol(this.bullets)){
+        if(bulletcontrol(player.bullets)){
             if(bulletCount>=9){
                 bulletCount= -1;
 
             }    
         bulletCount++;
-       
+        player.bullets--;
         
         gunsound.play();      
         music.play(); 
