@@ -4,8 +4,8 @@
     const gravity = 0.1;
 
 
-    canvas.width = 1920;
-    canvas.height = 1080;
+    canvas.width = 1280;
+    canvas.height = 960;
 
     
     let isOnGround = false;
@@ -20,10 +20,40 @@
 
     let offset = 0;
     
+    let gunsound  = document.getElementById("gunfire");
+    let music = document.getElementById("background");
+
+    
     
 
+ 
+   
+    class bulletGui{
+
+        constructor(){
+            this.x;
+            this.y;
+            this.count;
+            context.font= "bold 70px serif";
+            this.image = image("./sprite/bullet.png");
+            this.matrix = new DOMMatrix();
+        }
+
+        update(){
+            this.count = player.bullets;
+            this.x = player.x-400;
+            this.y = 100;
+        }
+
+        draw(){
+            
+            context.fillText(this.count,this.x, this.y);
+            context.drawImage(this.image,this.x-60,this.y-90,50,100);
+        }
 
 
+    }
+   
     class Platform {
         constructor(x, y, width, height) {
             this.x = x;
@@ -71,7 +101,7 @@
     let rifle = new Rifle(player.getPosition().x,player.getPosition().y);
     
     let cross = new Crosshair(mouseX,mouseY);
-    
+
   
     let enemies = [
         new Enemy(800,400,96,94,"./sprite/Woodcutter_idle.png"),
@@ -190,33 +220,28 @@
         new Background(540,350,70,50,"./sprite/leaf.png"),
         new Background(750,470,30,30,"./sprite/flower.png"),
         new Background(900,470,30,40,"./sprite/rock2.png"),
-        new Background(1750,400,100,200,"./sprite/tree.png"),
-        new Background(2750,115,100,200,"./sprite/tree.png"),
-        new Background(2900,270,30,40,"./sprite/rock2.png"),
-        new Background(2850,280,30,30,"./sprite/flower.png"),
-        new Background(4900,30,100,200,"./sprite/tree.png"),
-        new Background(5125,30,100,200,"./sprite/tree.png"),
-        new Background(5350,30,100,200,"./sprite/tree.png"),
-        new Background(5700,450,30,40,"./sprite/rock2.png"),
-        new Background(5885,450,30,40,"./sprite/rock2.png"),
-        new Background(5800,450,70,50,"./sprite/leaf.png"),
-        new Background(5775,460,30,30,"./sprite/rock.png"),
-        new Background(5900,450,70,50,"./sprite/leaf.png"),
-        new Background(8400,600,100,200,"./sprite/tree.png"),
-        new Background(14050,650,70,50,"./sprite/leaf.png"),
-        new Background(14150,500,100,200,"./sprite/tree.png"),
-        new Background(14225,660,30,30,"./sprite/rock.png"),
-        new Background(14520,500,100,200,"./sprite/tree.png"),
-        new Background(14770,500,100,200,"./sprite/tree.png"),
-        new Background(15800,300,100,200,"./sprite/tree.png"),
-        new Background(15925,450,30,40,"./sprite/rock2.png"),
-        new Background(15700,450,70,50,"./sprite/leaf.png"),
-        new Background(18300,700,100,200,"./sprite/tree.png"),
-        new Background(18800,700,100,200,"./sprite/tree.png")
-
-
-
-        
+        new Background(100,60,400,400,"./sprite/cloud1.png"),
+        new Background(700,50,400,400,"./sprite/cloud2.png"),
+        new Background(1200,55,400,400,"./sprite/cloud2.png"),
+        new Background(2000,20,400,400,"./sprite/cloud2.png"),
+        new Background(2800,0,400,400,"./sprite/cloud2.png"),
+        new Background(3400,0,400,400,"./sprite/cloud2.png"),
+        new Background(4000,20,400,400,"./sprite/cloud2.png"),
+        new Background(4500,10,400,400,"./sprite/cloud1.png"),
+        new Background(5500,25,400,400,"./sprite/cloud2.png"),
+        new Background(6500,15,400,400,"./sprite/cloud1.png"),
+        new Background(7400,10,400,400,"./sprite/cloud2.png"),
+        new Background(8000,10,400,400,"./sprite/cloud1.png"),
+        new Background(9500,20,400,400,"./sprite/cloud2.png"),
+        new Background(11000,10,400,400,"./sprite/cloud1.png"),
+        new Background(12000,40,400,400,"./sprite/cloud2.png"),
+        new Background(14000,30,400,400,"./sprite/cloud1.png"),
+        new Background(14500,50,400,400,"./sprite/cloud2.png"),
+        new Background(15000,20,400,400,"./sprite/cloud2.png"),
+        new Background(16000,10,400,400,"./sprite/cloud2.png"),
+        new Background(17000,10,400,400,"./sprite/cloud2.png"),
+        new Background(19000,20,400,400,"./sprite/cloud2.png"),
+      
 
 
 
@@ -225,7 +250,7 @@
         new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet(),
         new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet()
     ]
-    
+    let bullet =new bulletGui();
 
    
     
@@ -235,16 +260,17 @@
         
         let deltaTime = Date.now()-lastTime;
         lastTime = Date.now();
-      
+        
+        
      
         context.clearRect(0, 0, canvas.width, canvas.height);
-       
-       for(var i=0;i<=bulletCount;i++){
+        
+        for(var i=0;i<=bulletCount;i++){
            
             bullets[i].draw();
             bullets[i].update(deltaTime);
            
-       }
+        }
        
        
         player.draw(rifle.angle);
@@ -275,12 +301,12 @@
         
        
         rifle.update(player.x,player.y,player.width);
-        
+        bullet.update(player.x,player.y);
         cross.update();
         player.update(deltaTime);
         cross.draw();
         rifle.draw()
-    
+        bullet.draw();
         requestAnimationFrame(gameLoop);
 
     }
@@ -290,7 +316,7 @@
     gameLoop();
 
     
-
+    
 
     function update(){
         
@@ -346,7 +372,7 @@
     }
     function collisionDetection() {
      
-        
+
     platforms.forEach(platform => {
         
         
@@ -375,15 +401,17 @@
 
         bullets.forEach(bullet => {
             
-            if (bullet.y === -9999) return; 
+            if (bullet.y === -700) return; 
 
             if (bullet.x <= platform.x + platform.width &&
                 bullet.x + bullet.width >= platform.x &&
                 bullet.y + bullet.height >= platform.y &&
                 bullet.y <= platform.y + platform.height)  
             {
-                // Mermi duvara/platforma çarptı! Mermiyi yok et.
-                bullet.y = -9999; 
+                
+                bullet.y = -700; 
+                bullet.speed.x = 0;
+                bullet.speed.y = 0;
             }
         });       
     });
@@ -399,17 +427,22 @@
             player.y + player.height >= enemy.y &&
             player.y <= enemy.y + enemy.height)  
         {   
-            
-            let offset = 0;
+           
+            offset = 0;
             player.speed.x = 0;
             player.speed.y = 0;
-            player.x = offset;
-            player.y = 100;
+            player.x = 0;
+            player.y = 0;
+            
+                  
+                
+
+
         }
 
         
         bullets.forEach(bullet => {
-            if (bullet.y === -9999) return; 
+            if (bullet.y === -700 ) return; 
 
             if (bullet.x <= enemy.x + enemy.width &&
                 bullet.x + bullet.width >= enemy.x &&
@@ -418,7 +451,7 @@
             {
                
                 enemy.death = true;
-                bullet.y = -9999; 
+                bullet.y = -700; 
                 player.bullets += 2;
                 
                 setTimeout(() => { 
@@ -427,23 +460,29 @@
             }
         });
     });
-}
-   
-          spikes.forEach(spike => {
+    spikes.forEach(spike => {
     
         if (player.x <= spike.x + spike.width &&
              player.x + player.width >= spike.x &&
              player.y + player.height >= spike.y &&
              player.y <= spike.y + spike.height) {
-        
-       
-                 player.speed.x = 0;
-                 player.speed.y = 0;
-                 player.x = -200; 
-                 player.y = 100;
-                 offset = 0; 
+                
+
+            offset = 0;
+            player.speed.x = 0;
+            player.speed.y = 0;
+            player.x = 0;
+            player.y = 0;
+            
+                  
+                
+               
       }
       });
+
+}
+   
+  
 
    
     
@@ -462,7 +501,7 @@
     function keyHandler() {
         window.addEventListener("keydown", (event) => {
             
-            
+           
             
             if (event.code === "KeyD") {
                 player.speed.x = speedMultiplier;
@@ -500,12 +539,20 @@
             }    
         bulletCount++;
        
-
+        
+        gunsound.play();      
+        music.play(); 
+       
+ 
         bullets[bulletCount].angle = rifle.angle;
         bullets[bulletCount].x = rifle.x+rifle.width;
         bullets[bulletCount].y = rifle.y;
         bullets[bulletCount].speed.x = -Math.cos(rifle.angle)*10;
         bullets[bulletCount].speed.y = Math.sin(rifle.angle)*10;
+
+        
+        
+    
         }
     });
 
