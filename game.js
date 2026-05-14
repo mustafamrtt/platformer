@@ -270,7 +270,7 @@
     }
     function collisionDetection() {
      
-        
+
     platforms.forEach(platform => {
         
         
@@ -306,7 +306,7 @@
                 bullet.y + bullet.height >= platform.y &&
                 bullet.y <= platform.y + platform.height)  
             {
-                // Mermi duvara/platforma çarptı! Mermiyi yok et.
+                
                 bullet.y = -9999; 
             }
         });       
