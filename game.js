@@ -161,13 +161,49 @@
     
   
     let enemies = [
-        new Enemy(800,400,96,94,"./sprite/Woodcutter_idle.png")
+        new Enemy(800,400,96,94,"./sprite/Woodcutter_idle.png"),
+        new Enemy(1700,500,96,94,"./sprite/Woodcutter_idle.png"),
+        new Enemy(6400,400,96,94,"./sprite/Woodcutter_idle.png"),
+        new Enemy(7600,700,96,94,"./sprite/Woodcutter_idle.png"),
+        new Enemy(8000,700,96,94,"./sprite/Woodcutter_idle.png"),
+        new Enemy(8000,700,96,94,"./sprite/Woodcutter_idle.png")
     ]
     
     platforms = [
-        new Platform(-50, 500, 300, 90),
-        new Platform(300,350,300,90),
-        new Platform(700,500,500,90)
+        new Platform(-50, 500, 250, 90),
+        new Platform(300, 400, 300, 90),
+        new Platform(700, 500, 500, 90),
+        new Platform(1400, 600, 1000, 40),
+        new Platform(2600, 315, 350, 40),
+        new Platform(2950, 225, 850, 100),
+        new Platform(3800, 650, 250, 100), //diken koyulacak.
+        new Platform(4050, 225, 100, 30),
+        new Platform(4150, 650, 250, 100),
+        new Platform(4400, 225, 100, 30),
+        new Platform(4500, 650, 250, 100),
+        new Platform(4700, 225, 850, 100),
+        new Platform(5650, 500, 850, 300),
+        new Platform(6650, 250, 200, 100),
+        new Platform(7000, 250, 200, 100),
+        new Platform(7350, 250, 200, 100),
+        new Platform(7550, 800, 1000, 100),
+        new Platform(8800, 200, 350, 50),
+        new Platform(9150, 250, 350, 50),
+        new Platform(9500, 300, 350, 50),
+        new Platform(9850, 350, 750, 50),
+        new Platform(11250, 300, 400, 50),
+        new Platform(11650, 500, 350, 50),
+        new Platform(12000, 800, 350, 50),
+        new Platform(12500, 750, 100, 50),
+        new Platform(12750, 650, 100, 50),
+        new Platform(13000, 700, 100, 50),
+        new Platform(13250, 750, 100, 50),
+        new Platform(13500, 725, 100, 50),  
+        new Platform(13750, 650, 100, 50),
+        new Platform(14000, 700, 1000, 100),
+        new Platform(15600, 500, 500, 100)
+        
+
      
      
     
@@ -175,8 +211,8 @@
     ];
      background    =  [
         new Background(0,300,100,200,"./sprite/tree.png"),
-        new Background(300,150,100,200,"./sprite/tree.png"),
-        new Background(300,320,30,30,"./sprite/rock.png"),
+        new Background(300,200,100,200,"./sprite/tree.png"),
+        new Background(300,370,30,30,"./sprite/rock.png"),
         new Background(700,475,30,30,"./sprite/rock.png"),
         new Background(950,430,70,70,"./sprite/plant.png"),
         new Background(540,350,70,50,"./sprite/leaf.png"),
@@ -186,9 +222,7 @@
     ]
     bullets =  [
         new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet(),
-        new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet(),
-        
-        
+        new Bullet(),new Bullet(),new Bullet(),new Bullet(),new Bullet()
     ]
     
 
@@ -414,7 +448,7 @@
     }
     function bulletcontrol(bullets){
         if(player.bullets>0){
-            player.bullets-=1;
+            //player.bullets-=1;
             return 1;
         }
         else{

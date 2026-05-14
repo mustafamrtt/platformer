@@ -64,26 +64,30 @@ class Enemy{
         
     }
     
-    draw(){
-        context.save();
-        context.translate(this.x+this.width,this.y);
-        if(this.death){
-            context.scale(-1,1);
-            context.drawImage(this.deathImage,this.currentFrame*this.frameWidth,0,0,0,
-                this.width,this.height
-            )
-        }
-        else{
-        context.scale(-1,1);
-        context.drawImage(this.image,this.currentFrame*this.frameWidth,0,
-            this.frameWidth,this.frameHeight,
-            0,0,this.width,this.height // translate yaptığımız için x ve y değerlerini 0 giriyoruz.
+    draw() {
+    context.save();
+    context.translate(this.x + this.width, this.y);
+    
+    
+    context.scale(-1, 1); 
+
+    if (this.death) {
+        context.drawImage(
+            this.deathImage, 
+            this.currentFrame * this.frameWidth, 0, 
+            this.frameWidth, this.frameHeight, 
+            0, 0, this.width, this.height
         );
-        context.restore();
-        }
-        
-        
+    } else {
+        context.drawImage(
+            this.image, 
+            this.currentFrame * this.frameWidth, 0,
+            this.frameWidth, this.frameHeight,
+            0, 0, this.width, this.height 
+        );
     }
+    context.restore(); 
+}
 
 
 }
