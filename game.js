@@ -8,6 +8,7 @@
     canvas.height = 960;
 
     
+    
     let isOnGround = false;
     let isKeyUp = false;
     let friction = 0.125;
@@ -23,6 +24,7 @@
     let gunsound  = document.getElementById("gunfire");
     let music = document.getElementById("background");
 
+    let totaloffset = 0;
     
     
 
@@ -241,6 +243,29 @@
         new Background(16000,10,400,400,"./sprite/cloud2.png"),
         new Background(17000,10,400,400,"./sprite/cloud2.png"),
         new Background(19000,20,400,400,"./sprite/cloud2.png"),
+        new Background(1750,400,100,200,"./sprite/tree.png"),
+        new Background(2750,115,100,200,"./sprite/tree.png"),
+        new Background(2900,270,30,40,"./sprite/rock2.png"),
+        new Background(2850,280,30,30,"./sprite/flower.png"),
+        new Background(4900,30,100,200,"./sprite/tree.png"),
+        new Background(5125,30,100,200,"./sprite/tree.png"),
+        new Background(5350,30,100,200,"./sprite/tree.png"),
+        new Background(5700,450,30,40,"./sprite/rock2.png"),
+        new Background(5885,450,30,40,"./sprite/rock2.png"),
+        new Background(5800,450,70,50,"./sprite/leaf.png"),
+        new Background(5775,460,30,30,"./sprite/rock.png"),
+        new Background(5900,450,70,50,"./sprite/leaf.png"),
+        new Background(8400,600,100,200,"./sprite/tree.png"),
+        new Background(14050,650,70,50,"./sprite/leaf.png"),
+        new Background(14150,500,100,200,"./sprite/tree.png"),
+        new Background(14225,660,30,30,"./sprite/rock.png"),
+        new Background(14520,500,100,200,"./sprite/tree.png"),
+        new Background(14770,500,100,200,"./sprite/tree.png"),
+        new Background(15800,300,100,200,"./sprite/tree.png"),
+        new Background(15925,450,30,40,"./sprite/rock2.png"),
+        new Background(15700,450,70,50,"./sprite/leaf.png"),
+        new Background(18300,700,100,200,"./sprite/tree.png"),
+        new Background(18800,700,100,200,"./sprite/tree.png")
       
 
 
@@ -261,6 +286,7 @@
         let deltaTime = Date.now()-lastTime;
         lastTime = Date.now();
         
+        console.log(totaloffset);
         
      
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -344,8 +370,10 @@
 
         
         
+
       offset = player.x - 500; 
     
+
     
     if (offset !== 0) {
         
@@ -353,15 +381,19 @@
         player.x = 500;
         
         platforms.forEach(platform => {
+            totaloffset += offset;
             platform.x -= offset;
         });
         background.forEach(object => {
+            totaloffset += offset;
             object.x -= offset;
         });
         enemies.forEach(enemy =>{
+            totaloffset += offset;
               enemy.x -= offset;
         });
         spikes.forEach(spike => {
+             totaloffset += offset;
               spike.x -= offset;
         });
       
@@ -371,7 +403,15 @@
         
     }
     function collisionDetection() {
-     
+    
+        if(player.y>960){
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.fillStyle = "100px serif";
+            context.fillText("Game Over",canvas.width/2-200,canvas.height/2);
+
+
+        }
 
     platforms.forEach(platform => {
         
@@ -428,11 +468,11 @@
             player.y <= enemy.y + enemy.height)  
         {   
            
-            offset = 0;
-            player.speed.x = 0;
-            player.speed.y = 0;
-            player.x = 0;
-            player.y = 0;
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.fillStyle = "100px serif";
+            context.fillText("Game Over",canvas.width/2-200,canvas.height/2);
+            player.y = 970;
+            
             
                   
                 
@@ -462,17 +502,20 @@
     });
     spikes.forEach(spike => {
     
-        if (player.x <= spike.x + spike.width &&
+        if (player.x <= spike.x + spike.width &&    
              player.x + player.width >= spike.x &&
              player.y + player.height >= spike.y &&
              player.y <= spike.y + spike.height) {
                 
 
-            offset = 0;
-            player.speed.x = 0;
-            player.speed.y = 0;
-            player.x = 0;
-            player.y = 0;
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.fillStyle = "100px serif";
+            context.fillText("Game Over",canvas.width/2-200,canvas.height/2);
+            
+            player.y = 970;
+            
+            
+            
             
                   
                 
@@ -501,7 +544,7 @@
     function keyHandler() {
         window.addEventListener("keydown", (event) => {
             
-           
+            if(!gameOver){
             
             if (event.code === "KeyD") {
                 player.speed.x = speedMultiplier;
@@ -512,6 +555,7 @@
             }
                 else if(event.code === "Space" && isOnGround) {
                 player.speed.y = -5.0;
+            }
             }
             
         });   

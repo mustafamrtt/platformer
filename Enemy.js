@@ -31,28 +31,28 @@ class Enemy{
     }
     update(deltaTime){
 
-        if(this.death){
+        if(this.death){ //duruma göre spriteı update ediyoruz
             
             if(this.frameTimer>= this.animationSpeed){
-                this.deathCurrentFrame++;
-                this.frameTimer = 0.0;
+                this.deathCurrentFrame++;                    ///animasyon hızına ve zamanlayıcıya göre Framei arttırıyoruz.                  
+                this.frameTimer = 0.0;                                                      
             }
 
 
             
             if(this.deathCurrentFrame>=6){
-
+                                                          ///spritesheetteki frame sayısını kontrol edip başa dönüyoruz.
                  this.frameTimer = 0;
             }
             else{
-                this.frameTimer += deltaTime;
+                this.frameTimer += deltaTime;           //geçen zamanı frameTimer'a ekliyoruz.
             }
         }
 
         
         else{
         if(this.frameTimer >= this.animationSpeed){
-            this.currentFrame++;
+            this.currentFrame++;                                
             this.frameTimer = 0.0;
         }
         this.frameTimer += deltaTime;
@@ -72,7 +72,7 @@ class Enemy{
     context.translate(this.x + this.width, this.y);
     
     
-    context.scale(-1, 1); 
+    context.scale(-1, 1);           //Aynalıyoruz.
 
     if (this.death) {
         context.drawImage(
