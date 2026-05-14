@@ -17,6 +17,8 @@
     let gameOver = 0;
     
     let mouseX,mouseY;
+
+    let offset = 0;
     
     
 
@@ -74,17 +76,63 @@
     let enemies = [
         new Enemy(800,400,96,94,"./sprite/Woodcutter_idle.png"),
         new Enemy(2250,500,96,94,"./sprite/Woodcutter_idle.png"),
+        new Enemy(3600,120,96,94,"./sprite/Woodcutter_idle.png"),
         new Enemy(6400,400,96,94,"./sprite/Woodcutter_idle.png"),
         new Enemy(7600,700,96,94,"./sprite/Woodcutter_idle.png"),
-        new Enemy(8000,700,96,94,"./sprite/Woodcutter_idle.png"),
+        new Enemy(7850,700,96,94,"./sprite/Woodcutter_idle.png"),
         new Enemy(10500,250,96,94,"./sprite/Woodcutter_idle.png"),
-        new Enemy(10500,250,96,94,"./sprite/Woodcutter_idle.png")
+        new Enemy(14300,600,96,94,"./sprite/Woodcutter_idle.png"),
+        new Enemy(18400,800,96,94,"./sprite/Woodcutter_idle.png"),
+        new Enemy(18600,800,96,94,"./sprite/Woodcutter_idle.png"),
+
+        
     ];
 
     let spikes = [ 
-       new Spike(1600, 560, 80,80,"./sprite/Spike.png"),
-       new Spike(1900, 560, 80,80,"./sprite/Spike.png"),
+       new Spike(1600, 560, 80, 80,"./sprite/Spike.png"),
+       new Spike(1900, 560, 80, 80,"./sprite/Spike.png"),
+       new Spike(3150, 180, 80, 80,"./sprite/Spike.png"),
+       new Spike(3350, 180, 80, 80,"./sprite/Spike.png"),
+       new Spike(3800, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(3840, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(3880, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(3920, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(3960, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(4150, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(4190, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(4230, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(4270, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(4310, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(4500, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(4540, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(4580, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(4620, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(4660, 310, 80, 80,"./sprite/Spike.png"),
+       new Spike(5000, 180, 80, 80,"./sprite/Spike.png"),
+       new Spike(5250, 180, 80, 80,"./sprite/Spike.png"),
+       new Spike(8150, 760, 80, 80,"./sprite/Spike.png"),
+       new Spike(8180, 760, 80, 80,"./sprite/Spike.png"),
+       new Spike(8210, 760, 80, 80,"./sprite/Spike.png"),
+       new Spike(9060, 160, 80, 80,"./sprite/Spike.png"),
+       new Spike(9085, 160, 80, 80,"./sprite/Spike.png"),
+       new Spike(9410, 210, 80, 80,"./sprite/Spike.png"),
+       new Spike(9435, 210, 80, 80,"./sprite/Spike.png"),
+       new Spike(9760, 260, 80, 80,"./sprite/Spike.png"),
+       new Spike(9785, 260, 80, 80,"./sprite/Spike.png"),
+       new Spike(11585, 260, 80, 80,"./sprite/Spike.png"),
+       new Spike(11935, 460, 80, 80,"./sprite/Spike.png"),
+       new Spike(12285, 760, 80, 80,"./sprite/Spike.png"),
+       new Spike(14450, 660, 80, 80,"./sprite/Spike.png"),
+       new Spike(14700, 660, 80, 80,"./sprite/Spike.png"),
+       new Spike(18100, 860, 80, 80,"./sprite/Spike.png"),
+       new Spike(18130, 860, 80, 80,"./sprite/Spike.png"),
+       new Spike(18160, 860, 80, 80,"./sprite/Spike.png"),
+       new Spike(18480, 860, 80, 80,"./sprite/Spike.png"),
+       new Spike(18500, 860, 80, 80,"./sprite/Spike.png"),
+       new Spike(18520, 860, 80, 80,"./sprite/Spike.png"),
+       new Spike(18540, 860, 80, 80,"./sprite/Spike.png")
        
+
     ];
     
     platforms = [
@@ -94,13 +142,13 @@
         new Platform(1400, 600, 1000, 40),
         new Platform(2600, 315, 350, 40),
         new Platform(2950, 225, 850, 100),
-        new Platform(3800, 650, 250, 100), //diken koyulacak.
-        new Platform(4050, 225, 100, 30),
-        new Platform(4150, 650, 250, 100),
+        new Platform(3800, 350, 225, 100), //diken koyulacak.
+        new Platform(4025, 225, 100, 30),
+        new Platform(4150, 350, 225, 100),
         new Platform(4400, 225, 100, 30),
-        new Platform(4500, 650, 250, 100),
-        new Platform(4700, 225, 850, 100),
-        new Platform(5650, 500, 850, 300),
+        new Platform(4500, 350, 225, 100),
+        new Platform(4725, 225, 850, 100),
+        new Platform(5650, 500, 850, 100),
         new Platform(6650, 250, 200, 100),
         new Platform(7000, 250, 200, 100),
         new Platform(7350, 250, 200, 100),
@@ -120,28 +168,57 @@
         new Platform(13750, 650, 100, 50),
         new Platform(14000, 700, 1000, 100),
         new Platform(15600, 500, 500, 100),
-        new Platform(16250, 600, 40, 100),
-        new Platform(16450, 550, 40, 100),
-        new Platform(16700, 625, 40, 100),
-        new Platform(16900, 575, 40, 100),
-        new Platform(17250, 610, 40, 100),
-        new Platform(17500, 700, 40, 100),
-        new Platform(17700, 630, 40, 100),
-        new Platform(18000, 600, 1000, 100),
-        new Platform(19000, 500, 500, 100)
+        new Platform(16350, 600, 100, 50),
+        new Platform(16550, 550, 100, 50),
+        new Platform(16800, 625, 100, 50),
+        new Platform(17000, 575, 100, 50),
+        new Platform(17350, 610, 100, 50),
+        new Platform(17600, 700, 100, 50),
+        new Platform(17820, 630, 100, 50),
+        new Platform(18100, 900, 1000, 100),
+        new Platform(19100, 150, 500, 100)
 
     
         
     ];
      background    =  [
         new Background(0,300,100,200,"./sprite/tree.png"),
-        new Background(300,200,100,200,"./sprite/tree.png"),
+        new Background(340,200,100,200,"./sprite/tree.png"),
         new Background(300,370,30,30,"./sprite/rock.png"),
         new Background(700,475,30,30,"./sprite/rock.png"),
         new Background(950,430,70,70,"./sprite/plant.png"),
         new Background(540,350,70,50,"./sprite/leaf.png"),
         new Background(750,470,30,30,"./sprite/flower.png"),
         new Background(900,470,30,40,"./sprite/rock2.png"),
+        new Background(1750,400,100,200,"./sprite/tree.png"),
+        new Background(2750,115,100,200,"./sprite/tree.png"),
+        new Background(2900,270,30,40,"./sprite/rock2.png"),
+        new Background(2850,280,30,30,"./sprite/flower.png"),
+        new Background(4900,30,100,200,"./sprite/tree.png"),
+        new Background(5125,30,100,200,"./sprite/tree.png"),
+        new Background(5350,30,100,200,"./sprite/tree.png"),
+        new Background(5700,450,30,40,"./sprite/rock2.png"),
+        new Background(5885,450,30,40,"./sprite/rock2.png"),
+        new Background(5800,450,70,50,"./sprite/leaf.png"),
+        new Background(5775,460,30,30,"./sprite/rock.png"),
+        new Background(5900,450,70,50,"./sprite/leaf.png"),
+        new Background(8400,600,100,200,"./sprite/tree.png"),
+        new Background(14050,650,70,50,"./sprite/leaf.png"),
+        new Background(14150,500,100,200,"./sprite/tree.png"),
+        new Background(14225,660,30,30,"./sprite/rock.png"),
+        new Background(14520,500,100,200,"./sprite/tree.png"),
+        new Background(14770,500,100,200,"./sprite/tree.png"),
+        new Background(15800,300,100,200,"./sprite/tree.png"),
+        new Background(15925,450,30,40,"./sprite/rock2.png"),
+        new Background(15700,450,70,50,"./sprite/leaf.png"),
+        new Background(18300,700,100,200,"./sprite/tree.png"),
+        new Background(18800,700,100,200,"./sprite/tree.png")
+
+
+
+        
+
+
 
     ]
     bullets =  [
@@ -158,8 +235,7 @@
         
         let deltaTime = Date.now()-lastTime;
         lastTime = Date.now();
-        
-
+      
      
         context.clearRect(0, 0, canvas.width, canvas.height);
        
@@ -242,7 +318,7 @@
 
         
         
-      let offset = player.x - 500; 
+      offset = player.x - 500; 
     
     
     if (offset !== 0) {
@@ -353,7 +429,7 @@
     });
 }
    
-     spikes.forEach(spike => {
+          spikes.forEach(spike => {
     
         if (player.x <= spike.x + spike.width &&
              player.x + player.width >= spike.x &&
@@ -373,7 +449,7 @@
     
     function bulletcontrol(bullets){
         if(player.bullets>0){
-            player.bullets-=1;
+            //player.bullets-=1;
             return 1;
         }
         else{
