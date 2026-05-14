@@ -3,28 +3,28 @@
 
 [cite_start]**Geliştiriciler:** Mustafa Mert (24360859050) ve Efe Aslan (24360859073)[cite: 4, 5].
 
-## 🎮 Projenin Amacı ve Hedefi (Challenge)
+##  Projenin Amacı ve Hedefi 
 [cite_start]Projenin temel amacı, son yıllarda yapılmış olan oyun geliştirme yarışmalarından seçtiğimiz bir oyunun temel mekaniklerini HTML5 ve JavaScript ile "canvas" kullanarak geliştirmektir[cite: 14]. 
 
 [cite_start]**Oyunun Zorluğu ve Hedefi:** Oyuncunun temel hedefi, mermilerini idareli kullanarak düşmanları yok etmek ve engelleri aşmaktır[cite: 28, 29]. [cite_start]Geri tepme (recoil) mekaniği sayesinde oyuncular, silah ateşlendiğinde oluşan itici gücü platformlar arası geçişte stratejik bir avantaj olarak kullanmalıdır[cite: 25, 27].
 
-## 🔗 Bağlantılar
+##  Bağlantılar
 * [cite_start]**Oynanabilir Web Sürümü (GitHub Pages):** [Tıklayınız](https://mustafamrtt.github.io/platformer/) [cite: 74]
 * [cite_start]**Seçilen Oyun Sayfası:** [Tıklayınız](https://poonch.itch.io/recoil) [cite: 73]
 * [cite_start]**GitHub Kaynak Kodları:** [Tıklayınız](https://github.com/mustafamrtt/platformer) [cite: 75]
 
-## 🕹️ Oyun Kontrolleri
+##  Oyun Kontrolleri
 * [cite_start]**Nişan Alma ve Ateş Etme:** Farenin (crosshair) konumu ile hedeflenir ve fare tıklaması ile ateş edilir[cite: 30].
 * [cite_start]**Hareket ve Zıplama:** Karakter sağa/sola koşabilir ve yerdeyken zıplayabilir[cite: 15, 21].
 
-## 📸 Oyun İçi Görüntüler
+##  Oyun İçi Görüntüler
 [cite_start]*(Aşağıdaki görseller oyunun temel platform dinamiklerini ve düşman yerleşimlerini göstermektedir)*[cite: 53].
 
 ![Oyun İçi Görüntü 1](./sprite/ekran1.jpg) 
 ![Oyun İçi Görüntü 2](./sprite/ekran2.jpg)
 *(Not: GitHub'a yüklerken görsel yollarını kendi klasör yapınıza göre güncelleyebilirsiniz.)*
 
-## ⚙️ Oyun Mekanikleri ve Teknik Tasarım
+##  Oyun Mekanikleri ve Teknik Tasarım
 
 ### 1. Karakter Hareket ve Fizik Dinamikleri
 [cite_start]Oyunun fizik motoru, gerçek dünya dinamiklerinin oyuna uyarlanmasıyla oluşturulmuştur[cite: 17].
@@ -40,7 +40,7 @@
 * [cite_start]**AABB Collision (Çarpışma Testi):** Tüm objeler arasındaki etkileşim, dikdörtgen sınırlayıcı kutuların kesişimini kontrol eden bir algoritma ile yönetilir[cite: 35].
 * [cite_start]**Görsel ve Animasyon Sistemi:** Karakter animasyonları tek bir görsel üzerinden kare kare okunur (Sprite Sheet)[cite: 37]. [cite_start]Hareket yönüne göre `context.scale(-1, 1)` komutu kullanılarak varlıklar aynalanır[cite: 40, 41].
 
-## 👨‍💻 Grup Üyelerinin Rol Dağılımı
+##  Grup Üyelerinin Rol Dağılımı
 
 [cite_start]**Mustafa Mert** [cite: 56]
 [cite_start]Oyunun temel omurgasından, performansından ve fizik kurallarından sorumludur[cite: 57].
