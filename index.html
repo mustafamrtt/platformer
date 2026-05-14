@@ -12,11 +12,13 @@
                 height: 100vh;
                 justify-content: center;
                 cursor:none;
+               
                 
                 
             }
             canvas{
-                background-color: azure;
+                background-color: rgba(18, 16, 18, 0.9);
+                
                 
             }
            
@@ -24,12 +26,28 @@
         </style>
         
     </head>
-    <body onload="gameLoop()">
+    <body>
+        <audio id="gunfire">
+            <source src="./sound/gunfire.mp3" type="audio/mp3">
+        </audio>
+        <audio id="background">
+            <source src="./sound/background.mp3" type="audio/mp3">
+        </audio>
         <canvas id="canvas"></canvas>
+        <script src="image.js"></script>
+        <script src="Player.js"></script>
+        <script src="Rifle.js"></script>
+        
+        <script src="Crosshair.js"></script>
+        <script src="Enemy.js"></script>
+        <script src="Background.js"></script>
+        <script src="Spike.js"></script>
         <script src="game.js"></script>
-
+        
+       
+   
+       
     </body>
  
-
 
 </html>
