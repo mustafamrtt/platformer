@@ -7,10 +7,13 @@ class Enemy{
         this.width = width;
         this.height = height;
         this.image = image(imagepath);
-        this.deathImage = image("./sprite/Woodcutter_idle.png");
+        this.deathImage = image("./sprite/Woodcutter_death.png");
         this.frameCount=4;
         this.frameWidth=29;
         this.frameHeight=48;
+        this.deathframeWidth=48;
+        this.deathframeHeight=48;
+        this.deathCurrentFrame = 0;
         this.currentFrame;
         this.death = false;
         this.frameTimer;
@@ -31,13 +34,13 @@ class Enemy{
         if(this.death){
             
             if(this.frameTimer>= this.animationSpeed){
-                this.currentFrame++;
+                this.deathCurrentFrame++;
                 this.frameTimer = 0.0;
             }
 
 
             
-            if(this.currentFrame>=6){
+            if(this.deathCurrentFrame>=6){
 
                  this.frameTimer = 0;
             }
@@ -74,10 +77,10 @@ class Enemy{
     if (this.death) {
         context.drawImage(
             this.deathImage, 
-            this.currentFrame * this.frameWidth, 0, 
-            this.frameWidth, this.frameHeight, 
+            this.deathCurrentFrame * this.deathframeWidth, 0, 
+            this.deathframeWidth, this.frameHeight, 
             0, 0, this.width, this.height
-        );
+      );
     } else {
         context.drawImage(
             this.image, 
