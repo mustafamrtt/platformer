@@ -173,18 +173,18 @@
         new Platform(700, 500, 500, 90),
         new Platform(1400, 600, 1000, 40),
         new Platform(2600, 315, 350, 40),
-        new Platform(2950, 225, 850, 100),
-        new Platform(3800, 350, 225, 100), //diken koyulacak.
+        new Platform(2950, 225, 850, 90),
+        new Platform(3800, 350, 225, 90), //diken koyulacak.
         new Platform(4025, 225, 100, 30),
-        new Platform(4150, 350, 225, 100),
+        new Platform(4150, 350, 225, 90),
         new Platform(4400, 225, 100, 30),
-        new Platform(4500, 350, 225, 100),
-        new Platform(4725, 225, 850, 100),
-        new Platform(5650, 500, 850, 100),
-        new Platform(6650, 250, 200, 100),
-        new Platform(7000, 250, 200, 100),
-        new Platform(7350, 250, 200, 100),
-        new Platform(7550, 800, 1000, 100),
+        new Platform(4500, 350, 225, 90),
+        new Platform(4725, 225, 850, 90),
+        new Platform(5650, 500, 850, 90),
+        new Platform(6650, 250, 200, 90),
+        new Platform(7000, 250, 200, 90),
+        new Platform(7350, 250, 200, 90),
+        new Platform(7550, 800, 1000, 90),
         new Platform(8800, 200, 350, 50),
         new Platform(9150, 250, 350, 50),
         new Platform(9500, 300, 350, 50),
@@ -198,7 +198,7 @@
         new Platform(13250, 750, 100, 50),
         new Platform(13500, 725, 100, 50),  
         new Platform(13750, 650, 100, 50),
-        new Platform(14000, 700, 1000, 100),
+        new Platform(14000, 700, 1000, 90),
         new Platform(15600, 500, 500, 100),
         new Platform(16350, 600, 100, 50),
         new Platform(16550, 550, 100, 50),
@@ -207,7 +207,7 @@
         new Platform(17350, 610, 100, 50),
         new Platform(17600, 700, 100, 50),
         new Platform(17820, 630, 100, 50),
-        new Platform(18100, 900, 1000, 100),
+        new Platform(18100, 900, 1000, 90),
         new Platform(19100, 150, 500, 100)
 
     
@@ -497,7 +497,7 @@
                
                 enemy.death = true;
                 bullet.y = -700; 
-                player.bullets += 1;
+                player.bullets += 2;
                 
                 setTimeout(() => { 
                     enemy.x = -700;
@@ -519,7 +519,7 @@
             
             context.fillText("Press 'F5' To Restart",canvas.width/2-260,canvas.height/2+100);
             player.y = 970;
-
+                
 
             
             
