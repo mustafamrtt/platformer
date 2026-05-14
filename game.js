@@ -33,6 +33,7 @@
             this.image.onload = () => {
     
             this.pattern = context.createPattern(this.image,"repeat");
+            this.matrix = new DOMMatrix(); 
             }
         }
        
@@ -44,11 +45,12 @@
                 return;
            }
             // piksellerin çok büyümemesi için yanyana döşüyoruz 
-            const matrix = new DOMMatrix();  
+            this.matrix.e = this.x;
+            this.matrix.f = this.y-15;
 
-            matrix.translateSelf(this.x,this.y-15);
+           
 
-            this.pattern.setTransform(matrix);  
+            this.pattern.setTransform(this.matrix);  
 
             context.fillStyle = this.pattern;
 
@@ -150,7 +152,7 @@
         lastTime = Date.now();
         
 
-
+     
         context.clearRect(0, 0, canvas.width, canvas.height);
        
        for(var i=0;i<=bulletCount;i++){
@@ -324,14 +326,16 @@
                 player.x + player.width >= enemy.x&&
                 player.y + player.height>= enemy.y &&
                 player.y <= enemy.y + enemy.height)  
-            {
-                
-                player.speed.x = 0;
-                player.speed.y = 0;
-                player.x = -200;
-                player.y = 100;
+            {   
+
                
                 offset = 0;
+                player.speed.x = 0;
+                player.speed.y = 0;
+                player.x = offset;
+                player.y = 100;
+               
+               
             
 
             }
@@ -344,9 +348,19 @@
                 bullet.y + bullet.height>= enemy.y &&
                 bullet.y <= enemy.y + enemy.height)  
             {
+                
+                
                 enemy.death = true;
+                
+
+               setTimeout(()=>{ //animasyonun gözükmesi için gecikme
+
                 enemy.x = -700;
+
+               },1250);
+
                 player.bullets+=2;
+            
             
 
             }
@@ -354,6 +368,20 @@
    
             
          });
+        });
+        platforms.forEach(platform =>{
+            bullets.forEach(bullet =>{
+            if(bullet.x <= platform.x + platform.width &&
+                bullet.x + bullet.width >= platform.x&&
+                bullet.y + bullet.height>= bullet.y &&
+                bullet.y <= bullet.y + bullet.height)  {
+
+                   
+
+                }
+
+
+            });       
         });
    
        
