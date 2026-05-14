@@ -17,7 +17,7 @@ class Player {
             this.frameCount=0;
             this.frameTimer=0;
             this.animationspeed = 250;
-            this.bullets=100;
+            this.bullets=1;
             
           
             this.spriteSheet = image("./sprite/spritesheet.png");

@@ -4,8 +4,8 @@
     const gravity = 0.1;
 
 
-    canvas.width = 1920;
-    canvas.height = 1080;
+    canvas.width = 1280;
+    canvas.height = 960;
 
     
     let isOnGround = false;
@@ -32,18 +32,21 @@
             this.x;
             this.y;
             this.count;
-            context.font= "100px Arial";
+            context.font= "bold 70px serif";
+            this.image = image("./sprite/bullet.png");
+            this.matrix = new DOMMatrix();
         }
 
         update(){
-            this.count = "[]"+player.bullets;
-            this.x = player.x-500;
-            this.y = 1050;
+            this.count = player.bullets;
+            this.x = player.x-400;
+            this.y = 100;
         }
 
         draw(){
             
             context.fillText(this.count,this.x, this.y);
+            context.drawImage(this.image,this.x-60,this.y-90,50,100);
         }
 
 
@@ -169,6 +172,30 @@
         new Background(540,350,70,50,"./sprite/leaf.png"),
         new Background(750,470,30,30,"./sprite/flower.png"),
         new Background(900,470,30,40,"./sprite/rock2.png"),
+        new Background(100,60,400,400,"./sprite/cloud1.png"),
+        new Background(700,50,400,400,"./sprite/cloud2.png"),
+        new Background(1200,55,400,400,"./sprite/cloud2.png"),
+        new Background(2000,20,400,400,"./sprite/cloud2.png"),
+        new Background(2800,0,400,400,"./sprite/cloud2.png"),
+        new Background(3400,0,400,400,"./sprite/cloud2.png"),
+        new Background(4000,20,400,400,"./sprite/cloud2.png"),
+        new Background(4500,10,400,400,"./sprite/cloud1.png"),
+        new Background(5500,25,400,400,"./sprite/cloud2.png"),
+        new Background(6500,15,400,400,"./sprite/cloud1.png"),
+        new Background(7400,10,400,400,"./sprite/cloud2.png"),
+        new Background(8000,10,400,400,"./sprite/cloud1.png"),
+        new Background(9500,20,400,400,"./sprite/cloud2.png"),
+        new Background(11000,10,400,400,"./sprite/cloud1.png"),
+        new Background(12000,40,400,400,"./sprite/cloud2.png"),
+        new Background(14000,30,400,400,"./sprite/cloud1.png"),
+        new Background(14500,50,400,400,"./sprite/cloud2.png"),
+        new Background(15000,20,400,400,"./sprite/cloud2.png"),
+        new Background(16000,10,400,400,"./sprite/cloud2.png"),
+        new Background(17000,10,400,400,"./sprite/cloud2.png"),
+        new Background(19000,20,400,400,"./sprite/cloud2.png"),
+      
+
+
 
     ]
     bullets =  [
@@ -352,8 +379,15 @@
             player.y + player.height >= enemy.y &&
             player.y <= enemy.y + enemy.height)  
         {   
-            gameOver = 1;
+           
+            offset = 0;
+            player.speed.x = 0;
+            player.speed.y = 0;
+            player.x = 0;
+            player.y = 0;
             
+                  
+                
 
 
         }
@@ -385,8 +419,15 @@
              player.y + player.height >= spike.y &&
              player.y <= spike.y + spike.height) {
                 
+
+            offset = 0;
+            player.speed.x = 0;
+            player.speed.y = 0;
+            player.x = 0;
+            player.y = 0;
+            
                   
-                gameOver = 1;
+                
                
       }
       });
