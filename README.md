@@ -1,4 +1,4 @@
-<img width="1798" height="900" alt="image" src="https://github.com/user-attachments/assets/f4c14ba6-2225-4a8e-ab5a-4c04084924ec" />## Web Tabanlı Programlama Dönem Projesi
+## Web Tabanlı Programlama Dönem Projesi
 [cite_start]Bursa Teknik Üniversitesi, Bilgisayar Mühendisliği Bölümü[cite: 1, 2].
 
 [cite_start]**Geliştiriciler:** Mustafa Mert (24360859050) ve Efe Aslan (24360859073)[cite: 4, 5].
