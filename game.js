@@ -409,6 +409,8 @@
             context.clearRect(0, 0, canvas.width, canvas.height);
             context.fillStyle = "100px serif";
             context.fillText("Game Over",canvas.width/2-200,canvas.height/2);
+            
+            context.fillText("Press 'F5' To Restart",canvas.width/2-260,canvas.height/2+100);
 
 
         }
@@ -471,8 +473,11 @@
             context.clearRect(0, 0, canvas.width, canvas.height);
             context.fillStyle = "100px serif";
             context.fillText("Game Over",canvas.width/2-200,canvas.height/2);
-            player.y = 970;
             
+            context.fillText("Press 'F5' To Restart",canvas.width/2-260,canvas.height/2+100);
+            player.y = 970;
+
+
             
                   
                 
@@ -512,7 +517,10 @@
             context.fillStyle = "100px serif";
             context.fillText("Game Over",canvas.width/2-200,canvas.height/2);
             
+            context.fillText("Press 'F5' To Restart",canvas.width/2-260,canvas.height/2+100);
             player.y = 970;
+
+
             
             
             
