@@ -5,16 +5,6 @@
 
 
     canvas.width = 1280;
-<<<<<<< HEAD
-    canvas.height = 720;
-    let collision = 0;
-    let acceleration = 0.1;
-    let isOnGround = false;
-    let mouseX,mouseY;
-    class Player {
-         
-        
-=======
     canvas.height = 960;
 
     
@@ -33,53 +23,11 @@
     
     let gunsound  = document.getElementById("gunfire");
     let music = document.getElementById("background");
->>>>>>> animation
 
     let totaloffset = 0;
     
     
 
-<<<<<<< HEAD
-        constructor() {
-            this.x=100.0;
-            this.y= 100.0;
-            this.height =178;
-            this.width = 120;
-            this.spriteSheet;
-            this.frameHeight = 88;
-            this.frameWidth = 60;
-          
-            this.currentFrame=0;
-        
-            this.frameCount=0;
-            this.frameTimer=0;
-            this.animationspeed = 350;
-            
-          
-
-            this.IDLE = 0;
-            this.RUNNING = 1;
-            this.JUMPING = 2;
-            this.isDirectionRight = true; //yön kontrolü
-            this.currentRow=-1;
-           
-            this.speed = {
-                x: 0,
-                y:  0
-            }
-
-            
-          
-           
-        
-        }
-        getPosition(){
-            let position= {
-                x:this.x-40,
-                y:this.y-90
-            }
-            return position;
-=======
  
    
     class bulletGui{
@@ -103,7 +51,6 @@
             
             context.fillText(this.count,this.x, this.y);
             context.drawImage(this.image,this.x-60,this.y-90,50,100);
->>>>>>> animation
         }
         start(){
             this.spriteSheet = image("spritesheet.png");
@@ -196,106 +143,9 @@
     
         
 
-<<<<<<< HEAD
-    }    
-    class crosshair{
-        constructor(){
-           this.x=0;
-           this.y=0; 
-
-           
-        }
-         update(){
-             window.addEventListener("mousemove",(event) => {
-            mouseX = event.clientX;
-            mouseY = event.clientY;
-
-            }) ;
-
-            this.x = mouseX;
-            this.y = mouseY;
-        }
-
-        draw(){
-            context.beginPath();
-            context.moveTo(mouseX,mouseY);
-            context.lineTo(mouseX-6,mouseY);
-            context.lineTo(mouseX+6,mouseY);
-            context.moveTo(mouseX,mouseY);
-            context.lineTo(mouseX,mouseY+6);
-             context.lineTo(mouseX,mouseY-6);
-            context.strokeStyle= "red";
-            context.stroke();
-        }
-
-    }
-    class Rifle{
-        constructor(x,y){
-            this.x = x;
-            this.y = y;
-            this.width = 90;
-            this.height = 90;
-            this.angle; 
-            this.spriteSheet = image("riflespritesheet.png");
-            this.frameWidth = 46;
-            this.frameHeight = 30;
-            this.currentFrame=0;
-        
-            this.clickTime=0;
-            this.isClicked = false;
-            
-      
-            this.isDirectionRight = true;
-        }
-        
-        update(playerX,playerY){
-                this.angle =(90.0-Math.atan2(this.x+this.width/2-mouseX,this.y+this.height/2-mouseY));//silah ile mouse arasındaki açıyı buluyoruz
-                
-                if(this.isClicked && Date.now()-this.clickTime >= 400){
-                    this.currentFrame = 0;
-                    this.isClicked = false;
-                }
-                if(this.angle>90.00){
-                    this.x = playerX+player.width-30;
-                    this.y = playerY+100;
-                    
-                }   
-                else{
-                    this.x = playerX+30;
-                    this.y = playerY+100;
-                   
-                }
-        }
-              
-        draw(){
-            console.log(this.angle);
-            context.save();
-            context.translate(this.x,this.y);
-            context.rotate(this.angle);
-            if(this.angle>90.00){
-             context.scale(-1,-1);//silahı aynalıyoruz oyuncunun baktığı yere
-            }
-            else{
-                context.scale(-1,1);//silahı aynalıyoruz oyuncunun baktığı yöne
-            }
-            context.drawImage(this.spriteSheet,this.currentFrame*this.frameWidth,0,this.frameWidth,this.frameHeight,
-                this.width/-2.0,this.height/-2.0,this.width,this.height
-            );//çizim noktasını merkeze akip rotasyon veriyoruz
-
-            context.restore();
-
-          
-            
-           
-
-
-        }
-    }
-=======
 
     }
    
->>>>>>> animation
     class Platform {
         constructor(x, y, width, height) {
             this.x = x;
@@ -341,10 +191,6 @@
     let platforms = [];
     let player = new Player(); 
     let rifle = new Rifle(player.getPosition().x,player.getPosition().y);
-<<<<<<< HEAD
-    let cross = new crosshair(mouseX,mouseY);
-    
-=======
     
     let cross = new Crosshair(mouseX,mouseY);
 
@@ -360,25 +206,9 @@
         new Enemy(14300,600,96,94,"./sprite/Woodcutter_idle.png"),
         new Enemy(18400,800,96,94,"./sprite/Woodcutter_idle.png"),
         new Enemy(18600,800,96,94,"./sprite/Woodcutter_idle.png"),
->>>>>>> animation
 
         
     ];
-<<<<<<< HEAD
-    
-    player.start();
-    
-    
-    let lastTime= 0;
-    function gameLoop(timeStamp){
-        
-        
-        const deltaTime = timeStamp -lastTime;
-        lastTime = timeStamp;
-
-
-
-=======
 
     let spikes = [ 
        new Spike(1600, 560, 80, 80,"./sprite/Spike.png"),
@@ -549,7 +379,6 @@
         console.log(totaloffset);
         
      
->>>>>>> animation
         context.clearRect(0, 0, canvas.width, canvas.height);
         
         for(var i=0;i<=bulletCount;i++){
@@ -567,26 +396,6 @@
             platform.draw();
 
         });
-<<<<<<< HEAD
-     
-        player.update(deltaTime);
-        update();
-        collisionDetection();
-        cross.draw();
-        cross.update();
-
-        player.draw(rifle.angle);
-        rifle.update(player.x,player.y);
-        rifle.draw()
-       
-    
-       
-        
-        
-        
-    
-        
-=======
         background.forEach(object=>{
             
             object.draw();
@@ -614,22 +423,16 @@
         cross.draw();
         rifle.draw()
         bullet.draw();
->>>>>>> animation
         requestAnimationFrame(gameLoop);
 
     }
     keyHandler();
-<<<<<<< HEAD
-   
-
-=======
     
    
     gameLoop();
 
     
     
->>>>>>> animation
 
     function update(){
         
@@ -690,30 +493,6 @@
         
     }
     function collisionDetection() {
-<<<<<<< HEAD
-        platforms.forEach(platform => {
-            if (player.x <= platform.x + platform.width &&
-                player.x + player.width >= platform.x&&
-                player.y + player.height >= platform.y &&
-                player.y <= platform.y + platform.height
-                ) {
-        
-                
-                if(player.speed.y > 0 && player.y + player.height <= platform.y + player.speed.y) {
-                        player.y = platform.y - player.height;
-                        if(player.speed.y > 0) {
-                            player.speed.y = 0;
-                            isOnGround = true;
-
-                        }
-                        
-                        
-                    }
-                if(!isOnGround){
-                    player.speed.x = 0;
-                }  
-                
-=======
     
         if(player.y>960){
 
@@ -751,7 +530,6 @@
         }
 
         bullets.forEach(bullet => {
->>>>>>> animation
             
             if (bullet.y === -700) return; 
 
@@ -858,18 +636,6 @@
             
             if(!gameOver){
             
-<<<<<<< HEAD
-            
-            if (event.code === "ArrowRight") {
-                player.speed.x = 2;
-                player.lastKey = 0;
-            } else if (event.code === "ArrowLeft") {
-                player.speed.x = -2;
-                player.lastKey = 2;
-            }
-                else if(event.code === "ArrowUp"&& isOnGround) {
-                player.speed.y = -2.9;
-=======
             if (event.code === "KeyD") {
                 player.speed.x = speedMultiplier;
                 isKeyUp = false;
@@ -880,7 +646,6 @@
                 else if(event.code === "Space" && isOnGround) {
                 player.speed.y = -5.0;
             }
->>>>>>> animation
             }
             
         });   
@@ -890,16 +655,8 @@
                isKeyUp = true;
             }
         });
-<<<<<<< HEAD
-        canvas.addEventListener("mousedown", (event) => {
-        rifle.isClicked = true;
-        rifle.clickTime = Date.now();
-        rifle.currentFrame = 1; // ateş animasyonu
-    });
-=======
         
         
->>>>>>> animation
        
       
 
