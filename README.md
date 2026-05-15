@@ -43,19 +43,3 @@ Oyunun fizik motoru, gerçek dünya dinamiklerinin oyuna uyarlanmasıyla oluştu
 * **Tuzaklar (Spikes):** Mermilerden etkilenmeyen, ancak temas anında bölümü başa döndüren statik engellerdir.
 * **AABB Collision (Çarpışma Testi):** Tüm objeler arasındaki etkileşim, dikdörtgen sınırlayıcı kutuların kesişimini kontrol eden bir algoritma ile yönetilir.
 * **Görsel ve Animasyon Sistemi:** Karakter animasyonları tek bir görsel üzerinden kare kare okunur (Sprite Sheet). Hareket yönüne göre context.scale(-1, 1) komutu kullanılarak varlıklar aynalanır.
-
-##  Grup Üyelerinin Rol Dağılımı
-
-**Mustafa Mert**
-Oyunun temel omurgasından, performansından ve fizik kurallarından sorumludur.
-* requestAnimationFrame kullanarak ana oyun döngüsünün (gameLoop) kurulması ve deltaTime optimizasyonunun yazılması.
-* Karakterin yerçekimi, zıplama ve sürtünme dinamiklerinin matematiksel olarak koda dökülmesi.
-* Karakterin platformlarda durabilmesini ve dikenlere (Spike) çarptığında ölmesini sağlayan Eksen Hizalı Çarpışma (AABB Collision Detection) algoritmasının yazılması.
-* Karakter ilerledikçe platformların ve engellerin geriye doğru akmasını sağlayan kaydırma (offset) mantığının ayarlanması.
-
-**Efe Aslan**
-Oyunun içindeki aktörlerin, savaş mekaniklerinin ve görselliğin kodlanmasından sorumludur.
-* Düşman (Enemy), Mermi (Bullet) ve Silah (Rifle) gibi oyun objelerinin Nesne Yönelimli Programlama (OOP) mantığıyla bağımsız sınıflar olarak yazılması.
-* Fare (crosshair) açısına göre trigonometrik hesaplamalarla (Math.cos / Math.sin) mermi yönünün belirlenmesi ve Geri Tepme (Recoil) fiziğinin uygulanması.
-* Sprite Sheet görsellerinin parçalanarak kare kare oynatılması ve karakterin yönüne göre görsellerin aynalanması (context.scale).
-* Ses efektlerinin eklenmesi ve mermi sistemi yönetimi.
