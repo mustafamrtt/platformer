@@ -106,16 +106,16 @@
 
   
     let enemies = [
-        new Enemy(800,400,96,94,"./sprite/Woodcutter_idle.png"),
-        new Enemy(2250,500,96,94,"./sprite/Woodcutter_idle.png"),
-        new Enemy(3600,120,96,94,"./sprite/Woodcutter_idle.png"),
-        new Enemy(6400,400,96,94,"./sprite/Woodcutter_idle.png"),
-        new Enemy(7600,700,96,94,"./sprite/Woodcutter_idle.png"),
-        new Enemy(7850,700,96,94,"./sprite/Woodcutter_idle.png"),
-        new Enemy(10500,250,96,94,"./sprite/Woodcutter_idle.png"),
-        new Enemy(14300,600,96,94,"./sprite/Woodcutter_idle.png"),
-        new Enemy(18400,800,96,94,"./sprite/Woodcutter_idle.png"),
-        new Enemy(18600,800,96,94,"./sprite/Woodcutter_idle.png"),
+        new Enemy(800,400,"./sprite/Woodcutter_idle.png"),
+        new Enemy(2250,500,"./sprite/Woodcutter_idle.png"),
+        new Enemy(3600,120,"./sprite/Woodcutter_idle.png"),
+        new Enemy(6400,400,"./sprite/Woodcutter_idle.png"),
+        new Enemy(7600,700,"./sprite/Woodcutter_idle.png"),
+        new Enemy(7850,700,"./sprite/Woodcutter_idle.png"),
+        new Enemy(10500,250,"./sprite/Woodcutter_idle.png"),
+        new Enemy(14300,600,"./sprite/Woodcutter_idle.png"),
+        new Enemy(18400,800,"./sprite/Woodcutter_idle.png"),
+        new Enemy(18600,800,"./sprite/Woodcutter_idle.png"),
 
         
     ];
@@ -507,10 +507,10 @@
     });
     spikes.forEach(spike => {
     
-        if (player.x <= spike.x + spike.width &&    
-             player.x + player.width >= spike.x &&
-             player.y + player.height >= spike.y &&
-             player.y <= spike.y + spike.height) {
+        if (player.x <= spike.x + spike.width-20&&    
+             player.x + player.width >= spike.x+15 &&
+             player.y + player.height >= spike.y+15 &&
+             player.y <= spike.y + spike.height+15) {
                 
 
             context.clearRect(0, 0, canvas.width, canvas.height);

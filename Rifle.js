@@ -3,8 +3,8 @@
         
         this.x;
         this.y;
-        this.height=15;
-        this.width=15;
+        this.height=5;
+        this.width=5;
         this.frameWidth=15;
         this.frameHeight=7;
         this.currentFrame=0;

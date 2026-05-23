@@ -1,11 +1,11 @@
 class Enemy{
 
-    constructor(x,y,width,height,imagepath){
+    constructor(x,y,imagepath){
 
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
+        this.width = 48;
+        this.height = 96;
         this.image = image(imagepath);
         this.deathImage = image("./sprite/Woodcutter_death.png");
         this.frameCount=4;
