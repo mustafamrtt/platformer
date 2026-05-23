@@ -539,7 +539,7 @@
     
     function bulletcontrol(bullets){
         if(player.bullets>0){
-            //player.bullets-=1;
+          
             return 1;
         }
         else{
